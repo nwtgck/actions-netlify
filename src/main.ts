@@ -6,8 +6,7 @@ import NetlifyAPI from 'netlify'
 async function run(): Promise<void> {
   const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
   const siteId = process.env.NETLIFY_SITE_ID
-  // TODO: Hard code
-  const dir = 'dist'
+  const dir = core.getInput('publish-dir', {required: true})
 
   const client = new NetlifyAPI(netlifyAuthToken)
   const deployFolder = path.resolve(process.cwd(), dir)
