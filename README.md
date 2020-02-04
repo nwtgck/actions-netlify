@@ -1,6 +1,10 @@
 # actions-netlify
 GitHub Actions for deploying Netlify
 
+<img src="doc_assets/deploy-url-comment.png" width="650">
+
+Deploy URLs are commented on your pull request!
+
 ## Usage
 
 ```yaml
