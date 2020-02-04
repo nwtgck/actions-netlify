@@ -1,0 +1,13 @@
+name: 'Netlify Actions'
+description: 'GitHub Actions for Netlify'
+author: 'Ryo Ota'
+inputs:
+  publish-dir:
+    description: Publish directory
+    required: true
+  github-token:
+    description: GitHub token
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
