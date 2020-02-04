@@ -1,19 +1,18 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import * as path from 'path'
+// @ts-ignore
+import NetlifyAPI from 'netlify'
 
 async function run(): Promise<void> {
-  try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+  const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
+  const siteId = process.env.NETLIFY_SITE_ID
+  // TODO: Hard code
+  const dir = 'dist'
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
-  } catch (error) {
-    core.setFailed(error.message)
-  }
+  const client = new NetlifyAPI(netlifyAuthToken)
+  const deployFolder = path.resolve(process.cwd(), dir)
+  const deploy = await client.deploy(siteId, deployFolder)
+  core.debug(deploy.deploy.deploy_ssl_url)
 }
 
 run()

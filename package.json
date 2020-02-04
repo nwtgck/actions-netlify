@@ -24,7 +24,8 @@
   "author": "Ryo Ota <nwtgck@nwtgck.org> (https://github.com/nwtgck)",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.0"
+    "@actions/core": "^1.2.0",
+    "netlify": "^3.0.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
