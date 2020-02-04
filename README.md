@@ -19,7 +19,7 @@ jobs:
       # ...
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@develop
+        uses: nwtgck/actions-netlify@v0.1.1
         with:
           publish-dir: './dist'
           github-token: ${{ secrets.GITHUB_TOKEN }}
