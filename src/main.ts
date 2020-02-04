@@ -18,6 +18,10 @@ async function run(): Promise<void> {
     const deploy = await netlifyClient.deploy(siteId, deployFolder)
     // Get deploy URL
     const deployUrl = deploy.deploy.deploy_ssl_url
+    // Create a message
+    const message = `🚀 Deploy on ${deployUrl}`;
+    // Print the URL
+    process.stdout.write(`${message}\n`);
 
     // Get GitHub token
     const githubToken = core.getInput('github-token', {required: true})
@@ -30,7 +34,7 @@ async function run(): Promise<void> {
         issue_number: context.issue.number,
         owner: context.repo.owner,
         repo: context.repo.repo,
-        body: `🚀 Deploy on ${deployUrl}`
+        body: message
       })
     }
   } catch (error) {
