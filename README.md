@@ -23,6 +23,7 @@ jobs:
         with:
           publish-dir: './dist'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          production-branch: master
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
