@@ -22,8 +22,8 @@ jobs:
         uses: nwtgck/actions-netlify@v0.1.1
         with:
           publish-dir: './dist'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
@@ -32,3 +32,15 @@ jobs:
 - To get `NETLIFY_AUTH_TOKEN`, go <https://app.netlify.com/user/applications#personal-access-tokens>
 - To get `NETLIFY_SITE_ID`, go team page > your site > Settings > Site details > Site information > API ID
   - NOTE: API ID is `NETLIFY_SITE_ID`.
+
+
+## Inputs
+
+- `publish-dir`: required
+- `production-branch`: optional
+- `github-token`: optional
+
+## Env
+
+- `NETLIFY_AUTH_TOKEN`: required
+- `NETLIFY_SITE_ID`: required
