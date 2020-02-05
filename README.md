@@ -19,7 +19,7 @@ jobs:
       # ...
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v0.1.1
+        uses: nwtgck/actions-netlify@v0.2.0
         with:
           publish-dir: './dist'
           production-branch: master

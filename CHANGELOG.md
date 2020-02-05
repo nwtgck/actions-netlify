@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [0.2.0] - 2020-02-05
+### Added
+* Add `production-branch` input
+
+### Changed
+* Make `github-token` input optional
+
 ## [0.1.1] - 2020-02-04
 ### Changed
 * Print deploy URL
@@ -14,5 +21,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/nwtgck/actions-netlify/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/nwtgck/actions-netlify/compare/v0.1.0...v0.1.1
