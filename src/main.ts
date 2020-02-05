@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as path from 'path'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import NetlifyAPI from 'netlify'
 import {context, GitHub} from '@actions/github'
@@ -37,7 +38,10 @@ async function run(): Promise<void> {
       // If it is a pull request
       if (context.issue.number !== undefined) {
         // Comment the deploy URL
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         await githubClient.issues.createComment({
+          // eslint-disable-next-line @typescript-eslint/camelcase
           issue_number: context.issue.number,
           owner: context.repo.owner,
           repo: context.repo.repo,
