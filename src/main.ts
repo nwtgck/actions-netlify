@@ -9,33 +9,40 @@ async function run(): Promise<void> {
     const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
     const siteId = process.env.NETLIFY_SITE_ID
     const dir = core.getInput('publish-dir', {required: true})
+    const productionBranch = core.getInput('production-branch')
+    const branch: string = context.ref.replace(/^refs\/heads\//, '')
+    const isDraft: boolean = branch !== productionBranch
 
     // Create Netlify API client
     const netlifyClient = new NetlifyAPI(netlifyAuthToken)
     // Resolve publish directory
     const deployFolder = path.resolve(process.cwd(), dir)
     // Deploy to Netlify
-    const deploy = await netlifyClient.deploy(siteId, deployFolder)
-    // Get deploy URL
-    const deployUrl = deploy.deploy.deploy_ssl_url
+    const deploy = await netlifyClient.deploy(siteId, deployFolder, {
+      draft: isDraft
+    })
     // Create a message
-    const message = `🚀 Deploy on ${deployUrl}`;
+    const message = isDraft
+      ? `🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
+      : `🎉 Published on ${deploy.deploy.ssl_url} as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
     // Print the URL
-    process.stdout.write(`${message}\n`);
+    process.stdout.write(`${message}\n`)
 
     // Get GitHub token
-    const githubToken = core.getInput('github-token', {required: true})
-    // Create GitHub client
-    const githubClient = new GitHub(githubToken)
-    // If it is a pull request
-    if (context.issue.number !== undefined) {
-      // Comment the deploy URL
-      await githubClient.issues.createComment({
-        issue_number: context.issue.number,
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        body: message
-      })
+    const githubToken = core.getInput('github-token')
+    if (githubToken !== '') {
+      // Create GitHub client
+      const githubClient = new GitHub(githubToken)
+      // If it is a pull request
+      if (context.issue.number !== undefined) {
+        // Comment the deploy URL
+        await githubClient.issues.createComment({
+          issue_number: context.issue.number,
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          body: message
+        })
+      }
     }
   } catch (error) {
     core.setFailed(error.message)
