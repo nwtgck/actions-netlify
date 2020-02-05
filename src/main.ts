@@ -23,11 +23,11 @@ async function run(): Promise<void> {
       draft: isDraft
     })
     // Create a message
-    const message = isDraft
+    const deployMessage = isDraft
       ? `🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
       : `🎉 Published on ${deploy.deploy.ssl_url} as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
     // Print the URL
-    process.stdout.write(`${message}\n`)
+    process.stdout.write(`${deployMessage}\n`)
 
     // Get GitHub token
     const githubToken = core.getInput('github-token')
@@ -44,13 +44,37 @@ async function run(): Promise<void> {
           issue_number: context.issue.number,
           owner: context.repo.owner,
           repo: context.repo.repo,
-          body: message
+          body: `${deployMessage}\n${detailTable()}`
         })
       }
     }
   } catch (error) {
     core.setFailed(error.message)
   }
+}
+
+function detailTable(): string {
+  // eslint-disable-next-line @typescript-eslint/camelcase
+  const checkUrl = `${context.payload.repository?.html_url}/commit/${context.sha}/checks`
+  return `\
+<details>
+<summary>Details</summary>
+  <table>
+    <tr>
+      <td>GitHub Actions</td>
+      <td>
+        <a href="${checkUrl}">${checkUrl}</a>
+      </td>
+    </tr>
+    <tr>
+      <td>commit</td><td>${context.sha}</td>
+    </tr>
+    <tr>
+      <td>ref</td><td>${context.ref}</td>
+    </tr>
+  <table>
+</details>
+`
 }
 
 run()
