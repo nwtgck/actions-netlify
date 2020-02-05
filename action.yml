@@ -8,6 +8,9 @@ inputs:
   github-token:
     description: GitHub token
     required: true
+  production-branch:
+      description: Production branch
+      required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
