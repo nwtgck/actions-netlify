@@ -11,9 +11,8 @@ async function run(): Promise<void> {
     const siteId = process.env.NETLIFY_SITE_ID
     const dir = core.getInput('publish-dir', {required: true})
     const productionBranch = core.getInput('production-branch')
-    const branch: string = context.ref.replace(/^refs\/heads\//, '')
     // NOTE: if production-branch is not specified, it is "", so isDraft is always true
-    const isDraft: boolean = branch !== productionBranch
+    const isDraft: boolean = context.ref !== `refs/heads/${productionBranch}`
 
     // Create Netlify API client
     const netlifyClient = new NetlifyAPI(netlifyAuthToken)
