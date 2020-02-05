@@ -29,18 +29,20 @@ async function run(): Promise<void> {
     process.stdout.write(`${message}\n`)
 
     // Get GitHub token
-    const githubToken = core.getInput('github-token', {required: true})
-    // Create GitHub client
-    const githubClient = new GitHub(githubToken)
-    // If it is a pull request
-    if (context.issue.number !== undefined) {
-      // Comment the deploy URL
-      await githubClient.issues.createComment({
-        issue_number: context.issue.number,
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        body: message
-      })
+    const githubToken = core.getInput('github-token')
+    if (githubToken !== '') {
+      // Create GitHub client
+      const githubClient = new GitHub(githubToken)
+      // If it is a pull request
+      if (context.issue.number !== undefined) {
+        // Comment the deploy URL
+        await githubClient.issues.createComment({
+          issue_number: context.issue.number,
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          body: message
+        })
+      }
     }
   } catch (error) {
     core.setFailed(error.message)
