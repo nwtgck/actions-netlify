@@ -1,4 +1,6 @@
 # actions-netlify
+![build-test](https://github.com/nwtgck/actions-netlify/workflows/build-test/badge.svg)
+
 GitHub Actions for deploying Netlify
 
 <img src="doc_assets/deploy-url-comment.png" width="650">

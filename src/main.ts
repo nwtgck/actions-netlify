@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as path from 'path'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import NetlifyAPI from 'netlify'
 import {context, GitHub} from '@actions/github'
@@ -10,8 +11,8 @@ async function run(): Promise<void> {
     const siteId = process.env.NETLIFY_SITE_ID
     const dir = core.getInput('publish-dir', {required: true})
     const productionBranch = core.getInput('production-branch')
-    const branch: string = context.ref.replace(/^refs\/heads\//, '')
-    const isDraft: boolean = branch !== productionBranch
+    // NOTE: if production-branch is not specified, it is "", so isDraft is always true
+    const isDraft: boolean = context.ref !== `refs/heads/${productionBranch}`
 
     // Create Netlify API client
     const netlifyClient = new NetlifyAPI(netlifyAuthToken)
@@ -36,7 +37,10 @@ async function run(): Promise<void> {
       // If it is a pull request
       if (context.issue.number !== undefined) {
         // Comment the deploy URL
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         await githubClient.issues.createComment({
+          // eslint-disable-next-line @typescript-eslint/camelcase
           issue_number: context.issue.number,
           owner: context.repo.owner,
           repo: context.repo.repo,
