@@ -1,5 +1,5 @@
 name: 'Netlify Actions'
-description: 'GitHub Actions for Netlify'
+description: 'Netlify deploy from GitHub Actions'
 author: 'Ryo Ota'
 inputs:
   publish-dir:
