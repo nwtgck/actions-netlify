@@ -11,17 +11,17 @@ Deploy URLs are commented on your pull request!
 
 ```yaml
 # .github/workflows/netlify.yml
-
+name: Build and Deploy to Netlify
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-18.04
-
     steps:
       # Build to ./dist
       # ...
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v0.2.0
+        uses: nwtgck/actions-netlify@v1.0
         with:
           publish-dir: './dist'
           production-branch: master
