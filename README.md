@@ -12,7 +12,10 @@ Deploy URLs are commented on your pull request!
 ```yaml
 # .github/workflows/netlify.yml
 name: Build and Deploy to Netlify
-on: [push]
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize]
 jobs:
   build:
     runs-on: ubuntu-18.04
