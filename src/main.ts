@@ -37,8 +37,6 @@ async function run(): Promise<void> {
       // If it is a pull request
       if (context.issue.number !== undefined) {
         // Comment the deploy URL
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         await githubClient.issues.createComment({
           // eslint-disable-next-line @typescript-eslint/camelcase
           issue_number: context.issue.number,
