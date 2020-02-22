@@ -20,7 +20,9 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
-      # Build to ./dist
+      - uses: actions/checkout@v2
+
+      # Build to ./dist or other directory
       # ...
 
       - name: Deploy to Netlify
