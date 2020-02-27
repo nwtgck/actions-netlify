@@ -9,6 +9,10 @@ async function run(): Promise<void> {
   try {
     const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
     const siteId = process.env.NETLIFY_SITE_ID
+    if (!(netlifyAuthToken && siteId)) {
+      process.stdout.write('Netlify credentials not provided, not deployable')
+      return
+    }
     const dir = core.getInput('publish-dir', {required: true})
     const productionBranch = core.getInput('production-branch')
     // NOTE: if production-branch is not specified, it is "", so isDraft is always true
