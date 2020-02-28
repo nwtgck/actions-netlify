@@ -9,6 +9,11 @@ async function run(): Promise<void> {
   try {
     const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
     const siteId = process.env.NETLIFY_SITE_ID
+    // NOTE: Non-collaborators PRs don't pass GitHub secrets to GitHub Actions.
+    if (!(netlifyAuthToken && siteId)) {
+      process.stdout.write('Netlify credentials not provided, not deployable')
+      return
+    }
     const dir = core.getInput('publish-dir', {required: true})
     const productionBranch = core.getInput('production-branch')
     // NOTE: if production-branch is not specified, it is "", so isDraft is always true
@@ -34,6 +39,23 @@ async function run(): Promise<void> {
     if (githubToken !== '') {
       // Create GitHub client
       const githubClient = new GitHub(githubToken)
+
+      const commitCommentParams = {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        commit_sha: context.sha,
+        body: message
+      }
+      // TODO: Remove try
+      // NOTE: try-catch is experimentally used because commit message may not be done in some conditions.
+      try {
+        // Comment to the commit
+        await githubClient.repos.createCommitComment(commitCommentParams)
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err, JSON.stringify(commitCommentParams, null, '  '))
+      }
       // If it is a pull request
       if (context.issue.number !== undefined) {
         // Comment the deploy URL
