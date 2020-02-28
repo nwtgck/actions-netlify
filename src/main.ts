@@ -9,6 +9,7 @@ async function run(): Promise<void> {
   try {
     const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
     const siteId = process.env.NETLIFY_SITE_ID
+    // NOTE: Non-collaborators PRs don't pass GitHub secrets to GitHub Actions.
     if (!(netlifyAuthToken && siteId)) {
       process.stdout.write('Netlify credentials not provided, not deployable')
       return
