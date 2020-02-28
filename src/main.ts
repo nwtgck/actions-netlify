@@ -38,6 +38,23 @@ async function run(): Promise<void> {
     if (githubToken !== '') {
       // Create GitHub client
       const githubClient = new GitHub(githubToken)
+
+      const commitCommentParams = {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        commit_sha: context.sha,
+        body: message
+      }
+      // TODO: Remove try
+      // NOTE: try-catch is experimentally used because commit message may not be done in some conditions.
+      try {
+        // Comment to the commit
+        await githubClient.repos.createCommitComment(commitCommentParams)
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err, JSON.stringify(commitCommentParams, null, '  '))
+      }
       // If it is a pull request
       if (context.issue.number !== undefined) {
         // Comment the deploy URL
