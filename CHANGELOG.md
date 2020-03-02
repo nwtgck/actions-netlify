@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.0.4] - 2020-03-02
+### Changed
+* Update dependencies
+
 ## [1.0.3] - 2020-02-28
 ### Changed
 * Do not error out when no credentials are provided [#33](https://github.com/nwtgck/actions-netlify/pull/33) by [@tiangolo](https://github.com/tiangolo)
@@ -39,7 +43,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.0.4...HEAD
+[1.0.4]: https://github.com/nwtgck/actions-netlify/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/nwtgck/actions-netlify/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/nwtgck/actions-netlify/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/nwtgck/actions-netlify/compare/v1.0.0...v1.0.1
