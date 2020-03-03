@@ -31,6 +31,7 @@ jobs:
           publish-dir: './dist'
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: ${{ github.event.pull_request.title }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
@@ -45,3 +46,4 @@ jobs:
 ### Optional parameters
 - `production-branch` (e.g. "master")
 - `github-token: ${{ secrets.GITHUB_TOKEN }}`
+- `deploy-message` A custom deploy message to see on Netlify deployment (e.g. `${{ github.event.pull_request.title }}`)

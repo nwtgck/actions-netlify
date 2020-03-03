@@ -15,6 +15,7 @@ async function run(): Promise<void> {
     }
 
     const dir = core.getInput('publish-dir', { required: true })
+    const deployMessage = core.getInput('deploy-message') || undefined
     const productionBranch = core.getInput('production-branch')
 
     // NOTE: if production-branch input is not specified, it is "", so isDraft is always true
@@ -28,7 +29,8 @@ async function run(): Promise<void> {
 
     // Deploy to Netlify
     const deploy = await netlifyClient.deploy(siteId, deployFolder, {
-      draft: isDraft
+      draft: isDraft,
+      message: deployMessage
     })
 
     // Create a message
