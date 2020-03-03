@@ -5,6 +5,9 @@ inputs:
   publish-dir:
     description: Publish directory
     required: true
+  deploy-message:
+    description: Custom deploy message for Netlify
+    required: false
   github-token:
     description: GitHub token
     required: false
