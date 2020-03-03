@@ -1,41 +1,47 @@
 import * as core from '@actions/core'
-import * as path from 'path'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+import { context, GitHub } from '@actions/github'
 import NetlifyAPI from 'netlify'
-import {context, GitHub} from '@actions/github'
+import * as path from 'path'
 
 async function run(): Promise<void> {
   try {
     const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
     const siteId = process.env.NETLIFY_SITE_ID
+
     // NOTE: Non-collaborators PRs don't pass GitHub secrets to GitHub Actions.
     if (!(netlifyAuthToken && siteId)) {
       process.stdout.write('Netlify credentials not provided, not deployable')
       return
     }
-    const dir = core.getInput('publish-dir', {required: true})
+
+    const dir = core.getInput('publish-dir', { required: true })
     const productionBranch = core.getInput('production-branch')
-    // NOTE: if production-branch is not specified, it is "", so isDraft is always true
+
+    // NOTE: if production-branch input is not specified, it is "", so isDraft is always true
     const isDraft: boolean = context.ref !== `refs/heads/${productionBranch}`
 
     // Create Netlify API client
     const netlifyClient = new NetlifyAPI(netlifyAuthToken)
+
     // Resolve publish directory
     const deployFolder = path.resolve(process.cwd(), dir)
+
     // Deploy to Netlify
     const deploy = await netlifyClient.deploy(siteId, deployFolder, {
       draft: isDraft
     })
+
     // Create a message
     const message = isDraft
       ? `🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
       : `🎉 Published on ${deploy.deploy.ssl_url} as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
+
     // Print the URL
     process.stdout.write(`${message}\n`)
 
     // Get GitHub token
     const githubToken = core.getInput('github-token')
+
     if (githubToken !== '') {
       // Create GitHub client
       const githubClient = new GitHub(githubToken)
@@ -43,24 +49,23 @@ async function run(): Promise<void> {
       const commitCommentParams = {
         owner: context.repo.owner,
         repo: context.repo.repo,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         commit_sha: context.sha,
         body: message
       }
-      // TODO: Remove try
+
+      // TODO: Remove try/catch block
       // NOTE: try-catch is experimentally used because commit message may not be done in some conditions.
       try {
         // Comment to the commit
         await githubClient.repos.createCommitComment(commitCommentParams)
       } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err, JSON.stringify(commitCommentParams, null, '  '))
+        console.error(err, JSON.stringify(commitCommentParams, null, 2))
       }
+
       // If it is a pull request
       if (context.issue.number !== undefined) {
         // Comment the deploy URL
         await githubClient.issues.createComment({
-          // eslint-disable-next-line @typescript-eslint/camelcase
           issue_number: context.issue.number,
           owner: context.repo.owner,
           repo: context.repo.repo,
