@@ -1,28 +1,32 @@
 {
   "name": "actions-netlify",
   "version": "1.0.4",
-  "private": true,
   "description": "GitHub Actions for Netlify",
-  "main": "lib/main.js",
-  "scripts": {
-    "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
-    "lint": "eslint src/**/*.ts",
-    "pack": "ncc build",
-    "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run pack && npm test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nwtgck/actions-netlify.git"
-  },
   "keywords": [
     "actions",
     "Netlify"
   ],
-  "author": "Ryo Ota <nwtgck@nwtgck.org> (https://github.com/nwtgck)",
+  "homepage": "",
+  "bugs": "",
   "license": "MIT",
+  "author": "Ryo Ota <nwtgck@nwtgck.org> (https://github.com/nwtgck)",
+  "files": [
+    "dist/"
+  ],
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nwtgck/actions-netlify.git"
+  },
+  "scripts": {
+    "build": "ncc build src/main.ts",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "lint": "eslint src/**/*.ts",
+    "lint:tsc": "tsc --noEmit",
+    "test": "jest",
+    "all": "npm run format && npm run lint && npm run lint:tsc && npm run build"
+  },
   "dependencies": {
     "@actions/core": "^1.2.3",
     "@actions/github": "^2.1.1",
@@ -37,10 +41,9 @@
     "eslint-plugin-github": "^2.0.0",
     "eslint-plugin-jest": "^23.8.1",
     "jest": "^25.1.0",
-    "jest-circus": "^25.1.0",
-    "js-yaml": "^3.13.1",
     "prettier": "^1.19.1",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3"
-  }
+  },
+  "private": true
 }
