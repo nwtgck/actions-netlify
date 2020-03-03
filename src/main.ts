@@ -1,9 +1,7 @@
 import * as core from '@actions/core'
-import * as path from 'path'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import NetlifyAPI from 'netlify'
 import {context, GitHub} from '@actions/github'
+import NetlifyAPI from 'netlify'
+import * as path from 'path'
 
 async function run(): Promise<void> {
   try {
@@ -15,6 +13,7 @@ async function run(): Promise<void> {
       return
     }
     const dir = core.getInput('publish-dir', {required: true})
+    const deployMessage = core.getInput('deploy-message') || undefined
     const productionBranch = core.getInput('production-branch')
     // NOTE: if production-branch is not specified, it is "", so isDraft is always true
     const isDraft: boolean = context.ref !== `refs/heads/${productionBranch}`
@@ -25,7 +24,8 @@ async function run(): Promise<void> {
     const deployFolder = path.resolve(process.cwd(), dir)
     // Deploy to Netlify
     const deploy = await netlifyClient.deploy(siteId, deployFolder, {
-      draft: isDraft
+      draft: isDraft,
+      message: deployMessage
     })
     // Create a message
     const message = isDraft
@@ -54,7 +54,7 @@ async function run(): Promise<void> {
         await githubClient.repos.createCommitComment(commitCommentParams)
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(err, JSON.stringify(commitCommentParams, null, '  '))
+        console.error(err, JSON.stringify(commitCommentParams, null, 2))
       }
       // If it is a pull request
       if (context.issue.number !== undefined) {
