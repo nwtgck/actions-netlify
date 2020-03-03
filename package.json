@@ -6,8 +6,8 @@
     "actions",
     "Netlify"
   ],
-  "homepage": "",
-  "bugs": "",
+  "homepage": "https://github.com/nwtgck/actions-netlify",
+  "bugs": "https://github.com/nwtgck/actions-netlify/issues",
   "license": "MIT",
   "author": "Ryo Ota <nwtgck@nwtgck.org> (https://github.com/nwtgck)",
   "files": [
@@ -25,7 +25,7 @@
     "lint": "eslint src/**/*.ts",
     "lint:tsc": "tsc --noEmit",
     "test": "jest",
-    "all": "npm run format && npm run lint && npm run build"
+    "all": "npm run format && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
     "@actions/core": "^1.2.3",
@@ -41,6 +41,7 @@
     "eslint-plugin-github": "^2.0.0",
     "eslint-plugin-jest": "^23.8.1",
     "jest": "^25.1.0",
+    "jest-circus": "^25.1.0",
     "prettier": "^1.19.1",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3"
