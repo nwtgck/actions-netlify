@@ -47,3 +47,13 @@ jobs:
 - `production-branch` (e.g. "master")
 - `github-token: ${{ secrets.GITHUB_TOKEN }}`
 - `deploy-message` A custom deploy message to see on Netlify deployment (e.g. `${{ github.event.pull_request.title }}`)
+
+
+## Build on local
+
+```bash
+npm ci
+# NOTE: ./dist/typescript is generated automatically and causes type errors. (see: https://github.com/nwtgck/actions-netlify/issues/28)
+rm -r dist
+npm run all
+```
