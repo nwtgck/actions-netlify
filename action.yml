@@ -14,6 +14,9 @@ inputs:
   production-branch:
       description: Production branch
       required: false
+outputs:
+  deploy-url:
+    description: Deploy URL
 runs:
   using: 'node12'
   main: 'dist/index.js'
