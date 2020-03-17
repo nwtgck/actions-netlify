@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.0.6] - 2020-03-17
+### Changed
+* Update dependencies
+
+### Added
+* Add `deploy-url` output [#48](https://github.com/nwtgck/actions-netlify/pull/48) by [@kentaro-m](https://github.com/kentaro-m)
+
 ## [1.0.5] - 2020-03-03
 ### Added
 * Add `deploy-message` input [#40](https://github.com/nwtgck/actions-netlify/pull/40) by [@South-Paw](https://github.com/South-Paw)
@@ -47,7 +54,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.0.5...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.0.6...HEAD
+[1.0.6]: https://github.com/nwtgck/actions-netlify/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/nwtgck/actions-netlify/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/nwtgck/actions-netlify/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/nwtgck/actions-netlify/compare/v1.0.2...v1.0.3
