@@ -18,6 +18,7 @@ jobs:
       - name: Create a simple Web site
         run: mkdir -p deploy_dist && echo -e "<pre>$(date -u)\n$GITHUB_SHA\n$GITHUB_REF</pre>" > deploy_dist/index.html
       - uses: ./
+        id: deploy-to-netlify
         with:
           publish-dir: './deploy_dist'
           production-branch: master
@@ -26,3 +27,4 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      - run: "echo 'outputs.deploy-url: ${{ steps.deploy-to-netlify.outputs.deploy-url }}'"

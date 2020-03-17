@@ -34,6 +34,12 @@ async function run(): Promise<void> {
     // Print the URL
     process.stdout.write(`${message}\n`)
 
+    // Set the deploy URL to outputs for GitHub Actions
+    core.setOutput(
+      'deploy-url',
+      isDraft ? deploy.deploy.deploy_ssl_url : deploy.deploy.ssl_url
+    )
+
     // Get GitHub token
     const githubToken = core.getInput('github-token')
     if (githubToken !== '') {
