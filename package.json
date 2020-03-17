@@ -1,6 +1,6 @@
 {
   "name": "actions-netlify",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "description": "GitHub Actions for Netlify",
   "main": "lib/main.js",
