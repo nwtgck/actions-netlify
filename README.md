@@ -37,15 +37,14 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 ```
 
-### Inputs
 
-#### Required parameters
+### Required inputs and env
 - `publish-dir` (e.g. "dist", "_site")
 - `NETLIFY_AUTH_TOKEN`: [Personal access tokens](https://app.netlify.com/user/applications#personal-access-tokens) > New access token
 - `NETLIFY_SITE_ID`: team page > your site > Settings > Site details > Site information > API ID 
   - NOTE: API ID is `NETLIFY_SITE_ID`.
 
-#### Optional parameters
+### Optional inputs
 - `production-branch` (e.g. "master")
 - `github-token: ${{ secrets.GITHUB_TOKEN }}`
 - `deploy-message` A custom deploy message to see on Netlify deployment (e.g. `${{ github.event.pull_request.title }}`)
