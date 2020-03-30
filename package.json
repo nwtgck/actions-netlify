@@ -26,7 +26,7 @@
   "dependencies": {
     "@actions/core": "^1.2.3",
     "@actions/github": "^2.1.1",
-    "netlify": "^4.0.0"
+    "netlify": "^4.0.1"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
@@ -36,11 +36,11 @@
     "eslint": "^5.16.0",
     "eslint-plugin-github": "^2.0.0",
     "eslint-plugin-jest": "^23.8.2",
-    "jest": "^25.2.3",
-    "jest-circus": "^25.2.3",
+    "jest": "^25.2.4",
+    "jest-circus": "^25.2.4",
     "js-yaml": "^3.13.1",
     "prettier": "^2.0.2",
-    "ts-jest": "^25.2.1",
+    "ts-jest": "^25.3.0",
     "typescript": "^3.8.3"
   }
 }
