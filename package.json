@@ -1,6 +1,6 @@
 {
   "name": "actions-netlify",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": true,
   "description": "GitHub Actions for Netlify",
   "main": "lib/main.js",
@@ -26,11 +26,11 @@
   "dependencies": {
     "@actions/core": "^1.2.3",
     "@actions/github": "^2.1.1",
-    "netlify": "^4.0.1"
+    "netlify": "^4.0.2"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
-    "@types/node": "^12.12.32",
+    "@types/node": "^12.12.34",
     "@typescript-eslint/parser": "^2.26.0",
     "@zeit/ncc": "^0.22.0",
     "eslint": "^5.16.0",
