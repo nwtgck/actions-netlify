@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.0.10] - 2020-04-03
+### Changed
+* Update dependencies
+
 ## [1.0.9] - 2020-04-01
 ### Changed
 * Update dependencies
@@ -66,7 +70,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.0.9...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.0.10...HEAD
+[1.0.10]: https://github.com/nwtgck/actions-netlify/compare/v1.0.9...v1.0.10
 [1.0.9]: https://github.com/nwtgck/actions-netlify/compare/v1.0.8...v1.0.9
 [1.0.8]: https://github.com/nwtgck/actions-netlify/compare/v1.0.7...v1.0.8
 [1.0.7]: https://github.com/nwtgck/actions-netlify/compare/v1.0.6...v1.0.7
