@@ -28,3 +28,9 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       - run: "echo 'outputs.deploy-url: ${{ steps.deploy-to-netlify.outputs.deploy-url }}'"
+      - name: Running Page Speed Insights
+        uses: jakepartusch/psi-action@v1
+        with:
+          url: ${{ steps.deploy-to-netlify.outputs.deploy-url }}
+          threshold: 70
+          strategy: mobile
