@@ -26,18 +26,18 @@
   "dependencies": {
     "@actions/core": "^1.2.3",
     "@actions/github": "^2.1.1",
-    "netlify": "^4.0.4"
+    "netlify": "^4.0.5"
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
-    "@types/node": "^12.12.34",
-    "@typescript-eslint/parser": "^2.27.0",
+    "@types/node": "^12.12.35",
+    "@typescript-eslint/parser": "^2.28.0",
     "@zeit/ncc": "^0.22.1",
     "eslint": "^5.16.0",
     "eslint-plugin-github": "^2.0.0",
     "eslint-plugin-jest": "^23.8.2",
-    "jest": "^25.2.7",
-    "jest-circus": "^25.2.7",
+    "jest": "^25.3.0",
+    "jest-circus": "^25.3.0",
     "js-yaml": "^3.13.1",
     "prettier": "^2.0.4",
     "ts-jest": "^25.3.1",
