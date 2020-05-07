@@ -15,6 +15,14 @@ async function run(): Promise<void> {
     const dir = core.getInput('publish-dir', {required: true})
     const deployMessage = core.getInput('deploy-message') || undefined
     const productionBranch = core.getInput('production-branch')
+    // Default: true
+    const enablePullRequestComment = Boolean(
+      core.getInput('enable-pull-request-comment') || 'true'
+    )
+    // Default: true
+    const enableCommitComment = Boolean(
+      core.getInput('enable-commit-comment') || 'true'
+    )
     // NOTE: if production-branch is not specified, it is "", so isDraft is always true
     const isDraft: boolean = context.ref !== `refs/heads/${productionBranch}`
 
@@ -46,24 +54,27 @@ async function run(): Promise<void> {
       // Create GitHub client
       const githubClient = new GitHub(githubToken)
 
-      const commitCommentParams = {
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        commit_sha: context.sha,
-        body: message
+      if (enableCommitComment) {
+        const commitCommentParams = {
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          commit_sha: context.sha,
+          body: message
+        }
+        // TODO: Remove try
+        // NOTE: try-catch is experimentally used because commit message may not be done in some conditions.
+        try {
+          // Comment to the commit
+          await githubClient.repos.createCommitComment(commitCommentParams)
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err, JSON.stringify(commitCommentParams, null, 2))
+        }
       }
-      // TODO: Remove try
-      // NOTE: try-catch is experimentally used because commit message may not be done in some conditions.
-      try {
-        // Comment to the commit
-        await githubClient.repos.createCommitComment(commitCommentParams)
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err, JSON.stringify(commitCommentParams, null, 2))
-      }
-      // If it is a pull request
-      if (context.issue.number !== undefined) {
+
+      // If it is a pull request and enable comment on pull request
+      if (context.issue.number !== undefined && enablePullRequestComment) {
         // Comment the deploy URL
         await githubClient.issues.createComment({
           // eslint-disable-next-line @typescript-eslint/camelcase
