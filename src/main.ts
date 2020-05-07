@@ -18,6 +18,9 @@ async function run(): Promise<void> {
     // Default: true
     const enablePullRequestComment: boolean =
       (core.getInput('enable-pull-request-comment') || 'true') === 'true'
+    process.stdout.write(
+      `enablePullRequestComment: ${enablePullRequestComment}\n`
+    )
     // Default: true
     const enableCommitComment: boolean =
       (core.getInput('enable-commit-comment') || 'true') === 'true'
