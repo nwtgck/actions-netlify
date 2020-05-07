@@ -23,7 +23,11 @@ async function run(): Promise<void> {
     const enableCommitComment = Boolean(
       core.getInput('enable-commit-comment') || 'true'
     )
-    process.stdout.write(`comment: ${core.getInput('enable-commit-comment')}`)
+    process.stdout.write(
+      `comment: ${JSON.stringify(
+        core.getInput('enable-commit-comment')
+      )} ${JSON.stringify(enableCommitComment)}\n`
+    )
     // NOTE: if production-branch is not specified, it is "", so isDraft is always true
     const isDraft: boolean = context.ref !== `refs/heads/${productionBranch}`
 
