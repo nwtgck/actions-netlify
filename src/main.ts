@@ -84,6 +84,8 @@ async function run(): Promise<void> {
           repo: context.repo.repo,
           body: message
         })
+        // eslint-disable-next-line no-console
+        console.log('Comment on issue')
       }
     }
   } catch (error) {
