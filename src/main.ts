@@ -23,6 +23,8 @@ async function run(): Promise<void> {
     const enableCommitComment = Boolean(
       core.getInput('enable-commit-comment') || 'true'
     )
+    // eslint-disable-next-line no-console
+    console.log({comment: core.getInput('enable-commit-comment')})
     // NOTE: if production-branch is not specified, it is "", so isDraft is always true
     const isDraft: boolean = context.ref !== `refs/heads/${productionBranch}`
 
