@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.0.13] - 2020-05-09
+### Changed
+* Update dependencies
+
+## Added
+* Add "enable-pull-request-comment" input
+* Add "enable-commit-comment" input
+
 ## [1.0.12] - 2020-04-07
 ### Changed
 * Update dependencies
@@ -78,7 +86,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.0.12...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.0.13...HEAD
+[1.0.13]: https://github.com/nwtgck/actions-netlify/compare/v1.0.12...v1.0.13
 [1.0.12]: https://github.com/nwtgck/actions-netlify/compare/v1.0.11...v1.0.12
 [1.0.11]: https://github.com/nwtgck/actions-netlify/compare/v1.0.10...v1.0.11
 [1.0.10]: https://github.com/nwtgck/actions-netlify/compare/v1.0.9...v1.0.10
