@@ -2,8 +2,9 @@ import * as core from '@actions/core'
 import {context, GitHub} from '@actions/github'
 import NetlifyAPI from 'netlify'
 import * as path from 'path'
+import {defaultInputs, Inputs} from './inputs'
 
-async function run(): Promise<void> {
+async function run(inputs: Inputs): Promise<void> {
   try {
     const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
     const siteId = process.env.NETLIFY_SITE_ID
@@ -12,17 +13,14 @@ async function run(): Promise<void> {
       process.stdout.write('Netlify credentials not provided, not deployable')
       return
     }
-    const dir = core.getInput('publish-dir', {required: true})
-    const deployMessage = core.getInput('deploy-message') || undefined
-    const productionBranch = core.getInput('production-branch')
-    // Default: true
-    const enablePullRequestComment: boolean =
-      (core.getInput('enable-pull-request-comment') || 'true') === 'true'
-    // Default: true
-    const enableCommitComment: boolean =
-      (core.getInput('enable-commit-comment') || 'true') === 'true'
-    // NOTE: if production-branch is not specified, it is "", so isDraft is always true
-    const isDraft: boolean = context.ref !== `refs/heads/${productionBranch}`
+    const dir = inputs.publishDir()
+    const deployMessage: string | undefined = inputs.deployMessage()
+    const productionBranch: string | undefined = inputs.productionBranch()
+    const enablePullRequestComment: boolean = inputs.enablePullRequestComment()
+    const enableCommitComment: boolean = inputs.enableCommitComment()
+    const isDraft: boolean =
+      productionBranch === undefined ||
+      context.ref !== `refs/heads/${productionBranch}`
 
     // Create Netlify API client
     const netlifyClient = new NetlifyAPI(netlifyAuthToken)
@@ -47,7 +45,7 @@ async function run(): Promise<void> {
     )
 
     // Get GitHub token
-    const githubToken = core.getInput('github-token')
+    const githubToken = inputs.githubToken()
     if (githubToken !== '') {
       // Create GitHub client
       const githubClient = new GitHub(githubToken)
@@ -88,4 +86,4 @@ async function run(): Promise<void> {
   }
 }
 
-run()
+run(defaultInputs)
