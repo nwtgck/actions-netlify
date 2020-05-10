@@ -22,8 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Build to ./dist or other directory
-      # ...
+      # ( Build to ./dist or other directory... )
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.1
