@@ -116,6 +116,27 @@ describe('defaultInputs', () => {
       })
     })
   })
+
+  describe('overwritesPullRequestComment', () => {
+    test('it should be default value (true) when not specified', () => {
+      const b: boolean = defaultInputs.overwritesPullRequestComment()
+      expect(b).toBe(true)
+    })
+
+    test('it should be true when "true" specified', () => {
+      withInput('overwrites-pull-request-comment', 'true', () => {
+        const b: boolean = defaultInputs.overwritesPullRequestComment()
+        expect(b).toBe(true)
+      })
+    })
+
+    test('it should be true when "false" specified', () => {
+      withInput('overwrites-pull-request-comment', 'false', () => {
+        const b: boolean = defaultInputs.overwritesPullRequestComment()
+        expect(b).toBe(false)
+      })
+    })
+  })
 })
 
 // Old tests below
