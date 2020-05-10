@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.1.0] - 2020-05-10
+## Added
+* Add "overwrites-pull-request-comment" input
+
+### Changed
+* Overwrite comment on pull request by default
+  - You can use `overwrites-pull-request-comment: false` not to overwrite
+* Update dependencies
+
 ## [1.0.13] - 2020-05-09
 ### Changed
 * Update dependencies
@@ -86,7 +95,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.0.13...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/nwtgck/actions-netlify/compare/v1.0.13...v1.1.0
 [1.0.13]: https://github.com/nwtgck/actions-netlify/compare/v1.0.12...v1.0.13
 [1.0.12]: https://github.com/nwtgck/actions-netlify/compare/v1.0.11...v1.0.12
 [1.0.11]: https://github.com/nwtgck/actions-netlify/compare/v1.0.10...v1.0.11
