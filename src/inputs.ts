@@ -8,6 +8,7 @@ export interface Inputs {
   enablePullRequestComment(): boolean
   enableCommitComment(): boolean
   githubToken(): string
+  overwritesPullRequestComment(): boolean
 }
 
 export const defaultInputs: Inputs = {
@@ -30,5 +31,11 @@ export const defaultInputs: Inputs = {
   },
   githubToken() {
     return core.getInput('github-token')
+  },
+  overwritesPullRequestComment() {
+    // Default: true
+    return (
+      (core.getInput('overwrites-pull-request-comment') || 'true') === 'true'
+    )
   }
 }

@@ -10,11 +10,15 @@ import {defaultInputs} from '../src/inputs'
  * @param value
  * @param f
  */
-export async function withInput(inputName: string, value: string, f: () => void | Promise<void>): Promise<void> {
+export async function withInput(
+  inputName: string,
+  value: string,
+  f: () => void | Promise<void>
+): Promise<void> {
   // (from: https://github.com/actions/toolkit/blob/83dd3ef0f1e5bc93c5ab7072e1edf1715a01ba9d/packages/core/src/core.ts#L71)
   const envName = `INPUT_${inputName.replace(/ /g, '_').toUpperCase()}`
   process.env[envName] = value
-  await f();
+  await f()
   // NOTE: Not sure this is correct deletion
   delete process.env[envName]
 }
@@ -24,95 +28,116 @@ describe('defaultInputs', () => {
     withInput('publish-dir', './my_publish_dir', () => {
       const publishDir: string = defaultInputs.publishDir()
       expect(publishDir).toBe('./my_publish_dir')
-    });
+    })
   })
-
 
   describe('deployMessage', () => {
     test('it should be a string when specified', () => {
       withInput('deploy-message', 'Deploy with GitHub Actions', () => {
         const deployMessage: string | undefined = defaultInputs.deployMessage()
         expect(deployMessage).toBe('Deploy with GitHub Actions')
-      });
-    });
+      })
+    })
 
     test('it should be undefined when not specified', () => {
       const deployMessage: string | undefined = defaultInputs.deployMessage()
       expect(deployMessage).toBe(undefined)
-    });
-  });
+    })
+  })
 
   describe('productionBranch', () => {
     test('it should be a string when specified', () => {
       withInput('production-branch', 'master', () => {
-        const productionBranch: string | undefined = defaultInputs.productionBranch()
+        const productionBranch:
+          | string
+          | undefined = defaultInputs.productionBranch()
         expect(productionBranch).toBe('master')
-      });
-    });
+      })
+    })
 
     test('it should be undefined when not specified', () => {
       const deployMessage: string | undefined = defaultInputs.productionBranch()
       expect(deployMessage).toBe(undefined)
-    });
-  });
+    })
+  })
 
   describe('enablePullRequestComment', () => {
     test('it should be default value (true) when not specified', () => {
       const b: boolean = defaultInputs.enablePullRequestComment()
       expect(b).toBe(true)
-    });
+    })
 
     test('it should be true when "true" specified', () => {
       withInput('enable-pull-request-comment', 'true', () => {
         const b: boolean = defaultInputs.enablePullRequestComment()
         expect(b).toBe(true)
-      });
-    });
+      })
+    })
 
     test('it should be true when "false" specified', () => {
       withInput('enable-pull-request-comment', 'false', () => {
         const b: boolean = defaultInputs.enablePullRequestComment()
         expect(b).toBe(false)
-      });
-    });
-  });
+      })
+    })
+  })
 
   describe('enableCommitComment', () => {
     test('it should be default value (true) when not specified', () => {
       const b: boolean = defaultInputs.enableCommitComment()
       expect(b).toBe(true)
-    });
+    })
 
     test('it should be true when "true" specified', () => {
       withInput('enable-commit-comment', 'true', () => {
         const b: boolean = defaultInputs.enableCommitComment()
         expect(b).toBe(true)
-      });
-    });
+      })
+    })
 
     test('it should be true when "false" specified', () => {
       withInput('enable-commit-comment', 'false', () => {
         const b: boolean = defaultInputs.enableCommitComment()
         expect(b).toBe(false)
-      });
-    });
-  });
+      })
+    })
+  })
 
   describe('enableCommitComment', () => {
     test('it should be empty string when not specified', () => {
       const t: string = defaultInputs.githubToken()
       expect(t).toBe('')
-    });
+    })
 
     test('it should be a string when specified', () => {
       withInput('github-token', 'DUMMY_GITHUB_TOKEN', () => {
         const t: string = defaultInputs.githubToken()
         expect(t).toBe('DUMMY_GITHUB_TOKEN')
-      });
-    });
-  });
-})
+      })
+    })
+  })
 
+  describe('overwritesPullRequestComment', () => {
+    test('it should be default value (true) when not specified', () => {
+      const b: boolean = defaultInputs.overwritesPullRequestComment()
+      expect(b).toBe(true)
+    })
+
+    test('it should be true when "true" specified', () => {
+      withInput('overwrites-pull-request-comment', 'true', () => {
+        const b: boolean = defaultInputs.overwritesPullRequestComment()
+        expect(b).toBe(true)
+      })
+    })
+
+    test('it should be true when "false" specified', () => {
+      withInput('overwrites-pull-request-comment', 'false', () => {
+        const b: boolean = defaultInputs.overwritesPullRequestComment()
+        expect(b).toBe(false)
+      })
+    })
+  })
+})
 
 // Old tests below
 
