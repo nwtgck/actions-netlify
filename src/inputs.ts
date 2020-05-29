@@ -9,6 +9,7 @@ export interface Inputs {
   enableCommitComment(): boolean
   githubToken(): string
   overwritesPullRequestComment(): boolean
+  netlifyConfigPath(): string | undefined
 }
 
 export const defaultInputs: Inputs = {
@@ -37,5 +38,8 @@ export const defaultInputs: Inputs = {
     return (
       (core.getInput('overwrites-pull-request-comment') || 'true') === 'true'
     )
+  },
+  netlifyConfigPath() {
+    return core.getInput('netlify-config-path') || undefined
   }
 }
