@@ -5,8 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.1.1] - 2020-05-30
+### Added
+* Add "netlify-config-path" input to specify path to `netlify.toml`
+* Support GitHub Deployments
+
+### Changed
+* Update dependencies
+
 ## [1.1.0] - 2020-05-10
-## Added
+### Added
 * Add "overwrites-pull-request-comment" input
 
 ### Changed
@@ -18,7 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Changed
 * Update dependencies
 
-## Added
+### Added
 * Add "enable-pull-request-comment" input
 * Add "enable-commit-comment" input
 
@@ -95,7 +103,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/nwtgck/actions-netlify/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/nwtgck/actions-netlify/compare/v1.0.13...v1.1.0
 [1.0.13]: https://github.com/nwtgck/actions-netlify/compare/v1.0.12...v1.0.13
 [1.0.12]: https://github.com/nwtgck/actions-netlify/compare/v1.0.11...v1.0.12
