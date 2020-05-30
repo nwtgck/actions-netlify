@@ -27,6 +27,33 @@ async function findIssueComment(
   return undefined
 }
 
+async function createGitHubDeployment(
+  githubClient: GitHub,
+  environmentUrl: string,
+  environment: string
+): Promise<void> {
+  const {ref} = context
+  const deployment = await githubClient.repos.createDeployment({
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    auto_merge: false,
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    ref,
+    environment,
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    required_contexts: []
+  })
+  await githubClient.repos.createDeploymentStatus({
+    state: 'success',
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    environment_url: environmentUrl,
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    deployment_id: deployment.data.id
+  })
+}
+
 async function run(inputs: Inputs): Promise<void> {
   try {
     const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
@@ -42,6 +69,7 @@ async function run(inputs: Inputs): Promise<void> {
     const enablePullRequestComment: boolean = inputs.enablePullRequestComment()
     const enableCommitComment: boolean = inputs.enableCommitComment()
     const overwritesPullRequestComment: boolean = inputs.overwritesPullRequestComment()
+    const netlifyConfigPath: string | undefined = inputs.netlifyConfigPath()
     const isDraft: boolean =
       productionBranch === undefined ||
       context.ref !== `refs/heads/${productionBranch}`
@@ -53,7 +81,8 @@ async function run(inputs: Inputs): Promise<void> {
     // Deploy to Netlify
     const deploy = await netlifyClient.deploy(siteId, deployFolder, {
       draft: isDraft,
-      message: deployMessage
+      message: deployMessage,
+      configPath: netlifyConfigPath
     })
     // Create a message
     const message = isDraft
@@ -95,35 +124,67 @@ async function run(inputs: Inputs): Promise<void> {
         }
       }
 
+      if (context.issue.number === undefined) {
+        try {
+          const environmentUrl = isDraft
+            ? deploy.deploy.deploy_ssl_url
+            : deploy.deploy.ssl_url
+          const environment = isDraft ? 'commit' : 'production'
+          // Create GitHub Deployment
+          await createGitHubDeployment(
+            githubClient,
+            environmentUrl,
+            environment
+          )
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err)
+        }
+      }
+
       // If it is a pull request and enable comment on pull request
-      if (context.issue.number !== undefined && enablePullRequestComment) {
-        let commentId: number | undefined = undefined
-        if (overwritesPullRequestComment) {
-          // Find issue comment
-          commentId = await findIssueComment(githubClient)
+      if (context.issue.number !== undefined) {
+        if (enablePullRequestComment) {
+          let commentId: number | undefined = undefined
+          if (overwritesPullRequestComment) {
+            // Find issue comment
+            commentId = await findIssueComment(githubClient)
+          }
+
+          // NOTE: if not overwrite, commentId is always undefined
+          if (commentId !== undefined) {
+            // Update comment of the deploy URL
+            await githubClient.issues.updateComment({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              // eslint-disable-next-line @typescript-eslint/camelcase
+              comment_id: commentId,
+              body: markdownComment
+            })
+          } else {
+            // Comment the deploy URL
+            await githubClient.issues.createComment({
+              // eslint-disable-next-line @typescript-eslint/camelcase
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: markdownComment
+            })
+          }
         }
 
-        // NOTE: if not overwrite, commentId is always undefined
-        if (commentId !== undefined) {
-          // Update comment of the deploy URL
-          await githubClient.issues.updateComment({
-            owner: context.issue.owner,
-            repo: context.issue.repo,
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            comment_id: commentId,
-            body: markdownComment
-          })
-          return
+        try {
+          const environmentUrl = deploy.deploy.deploy_ssl_url
+          // Create GitHub Deployment
+          await createGitHubDeployment(
+            githubClient,
+            environmentUrl,
+            'pull request'
+          )
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err)
         }
-
-        // Comment the deploy URL
-        await githubClient.issues.createComment({
-          // eslint-disable-next-line @typescript-eslint/camelcase
-          issue_number: context.issue.number,
-          owner: context.repo.owner,
-          repo: context.repo.repo,
-          body: markdownComment
-        })
       }
     }
   } catch (error) {

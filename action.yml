@@ -23,6 +23,9 @@ inputs:
   overwrites-pull-request-comment:
     description: Overwrites pull request comment
     required: false
+  netlify-config-path:
+    description: Path to netlify.toml
+    required: false
 outputs:
   deploy-url:
     description: Deploy URL
