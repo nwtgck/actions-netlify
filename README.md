@@ -7,6 +7,10 @@ GitHub Actions for deploying to Netlify
 
 Deploy URLs are commented on your pull requests and commit comments!
 
+<img src="doc_assets/github-deployment.png" width="650">
+
+GitHub Deployments are also supported!
+
 ## Usage
 
 ```yaml
