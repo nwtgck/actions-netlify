@@ -54,6 +54,11 @@ async function createGitHubDeployment(
   })
 }
 
+function getBranchName(): string | undefined {
+  const matched = context.ref.match(/refs\/heads\/(.*)/)
+  return matched ? matched[1] : undefined
+}
+
 async function run(inputs: Inputs): Promise<void> {
   try {
     const netlifyAuthToken = process.env.NETLIFY_AUTH_TOKEN
@@ -82,7 +87,8 @@ async function run(inputs: Inputs): Promise<void> {
     const deploy = await netlifyClient.deploy(siteId, deployFolder, {
       draft: isDraft,
       message: deployMessage,
-      configPath: netlifyConfigPath
+      configPath: netlifyConfigPath,
+      branch: getBranchName() // https://github.com/netlify/js-client/releases/tag/v4.3.0
     })
     // Create a message
     const message = isDraft
