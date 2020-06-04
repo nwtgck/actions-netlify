@@ -138,17 +138,12 @@ describe('defaultInputs', () => {
     })
   })
 
-  describe('branch', () => {
+  describe('prefix', () => {
     test('it should be a string when specified', () => {
-      withInput('branch', 'foo', () => {
-        const branch: string | undefined = defaultInputs.branch()
-        expect(branch).toBe('foo')
+      withInput('prefix', 'foo', () => {
+        const prefix: string | undefined = defaultInputs.prefix()
+        expect(prefix).toBe('foo')
       })
-    })
-
-    test('it should use ref when not specified', () => {
-      const branch: string | undefined = defaultInputs.branch()
-      expect(branch).toBe('foo')
     })
   })
 })
