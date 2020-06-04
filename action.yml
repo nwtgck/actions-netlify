@@ -26,8 +26,8 @@ inputs:
   netlify-config-path:
     description: Path to netlify.toml
     required: false
-  branch:
-    description: Specifies the branch for deployment. Useful for creating specific deployment URL's
+  prefix:
+    description: Specifies the prefix for the deployment URL
     required: false
 outputs:
   deploy-url:

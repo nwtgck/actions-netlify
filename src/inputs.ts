@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import {context} from '@actions/github'
 
 // Why use function rather than raw string? => Inputs should be lazy evaluated.
 export interface Inputs {
@@ -11,12 +10,7 @@ export interface Inputs {
   githubToken(): string
   overwritesPullRequestComment(): boolean
   netlifyConfigPath(): string | undefined
-  branch(): string | undefined
-}
-
-function getBranchName(): string | undefined {
-  const matched = context.ref.match(/refs\/heads\/(.*)/)
-  return matched ? matched[1] : undefined
+  prefix(): string | undefined
 }
 
 export const defaultInputs: Inputs = {
@@ -49,7 +43,7 @@ export const defaultInputs: Inputs = {
   netlifyConfigPath() {
     return core.getInput('netlify-config-path') || undefined
   },
-  branch() {
-    return core.getInput('branch') || getBranchName()
+  prefix() {
+    return core.getInput('prefix') || undefined
   }
 }
