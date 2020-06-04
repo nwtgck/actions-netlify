@@ -10,7 +10,7 @@ export interface Inputs {
   githubToken(): string
   overwritesPullRequestComment(): boolean
   netlifyConfigPath(): string | undefined
-  prefix(): string | undefined
+  deployBranch(): string | undefined
 }
 
 export const defaultInputs: Inputs = {
@@ -43,7 +43,7 @@ export const defaultInputs: Inputs = {
   netlifyConfigPath() {
     return core.getInput('netlify-config-path') || undefined
   },
-  prefix() {
-    return core.getInput('prefix') || undefined
+  deployBranch() {
+    return core.getInput('deploy-branch') || undefined
   }
 }

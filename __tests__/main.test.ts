@@ -138,11 +138,11 @@ describe('defaultInputs', () => {
     })
   })
 
-  describe('prefix', () => {
+  describe('deploy-branch', () => {
     test('it should be a string when specified', () => {
-      withInput('prefix', 'foo', () => {
-        const prefix: string | undefined = defaultInputs.prefix()
-        expect(prefix).toBe('foo')
+      withInput('deploy-branch', 'foo', () => {
+        const deployBranch: string | undefined = defaultInputs.deployBranch()
+        expect(deployBranch).toBe('foo')
       })
     })
   })
