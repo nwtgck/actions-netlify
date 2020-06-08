@@ -26,7 +26,7 @@ inputs:
   netlify-config-path:
     description: Path to netlify.toml
     required: false
-  deploy-branch:
+  alias:
     description: Specifies the prefix for the deployment URL
     required: false
 outputs:

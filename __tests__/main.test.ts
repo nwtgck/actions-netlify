@@ -138,11 +138,11 @@ describe('defaultInputs', () => {
     })
   })
 
-  describe('deploy-branch', () => {
+  describe('alias', () => {
     test('it should be a string when specified', () => {
-      withInput('deploy-branch', 'foo', () => {
-        const deployBranch: string | undefined = defaultInputs.deployBranch()
-        expect(deployBranch).toBe('foo')
+      withInput('alias', 'foo', () => {
+        const alias: string | undefined = defaultInputs.alias()
+        expect(alias).toBe('foo')
       })
     })
   })
