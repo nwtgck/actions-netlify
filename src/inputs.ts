@@ -10,6 +10,7 @@ export interface Inputs {
   githubToken(): string
   overwritesPullRequestComment(): boolean
   netlifyConfigPath(): string | undefined
+  alias(): string | undefined
 }
 
 export const defaultInputs: Inputs = {
@@ -41,5 +42,8 @@ export const defaultInputs: Inputs = {
   },
   netlifyConfigPath() {
     return core.getInput('netlify-config-path') || undefined
+  },
+  alias() {
+    return core.getInput('alias') || undefined
   }
 }
