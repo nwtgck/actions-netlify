@@ -15,7 +15,7 @@ jest.mock('../src/inputs')
 jest.mock('@actions/github')
 
 mockDeploy.mockResolvedValue({deploy: {}})
-mocked(defaultInputs.githubToken).mockReturnValue('dummy-github-token')
+mocked(defaultInputs.githubToken).mockReturnValue('') // NOTE: empty string means the input is not specified
 mocked(defaultInputs.publishDir).mockReturnValue('my-publish-dir')
 
 process.env.NETLIFY_AUTH_TOKEN = 'dummy-netlify-auth-token'
