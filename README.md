@@ -69,7 +69,5 @@ jobs:
 
 ```bash
 npm ci
-# NOTE: ./dist/typescript is generated automatically and causes type errors. (see: https://github.com/nwtgck/actions-netlify/issues/28)
-rm -r dist
 npm run all
 ```
