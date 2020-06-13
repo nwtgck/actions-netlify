@@ -15,21 +15,22 @@ jest.mock('../src/inputs')
 jest.mock('@actions/github')
 
 mockDeploy.mockResolvedValue({deploy: {}})
-mocked(defaultInputs.githubToken).mockReturnValue('')
-mocked(defaultInputs.publishDir).mockReturnValue('publish-dir')
+mocked(defaultInputs.githubToken).mockReturnValue('dummy-github-token')
+mocked(defaultInputs.publishDir).mockReturnValue('my-publish-dir')
 
-process.env.NETLIFY_AUTH_TOKEN = 'auth-token'
-process.env.NETLIFY_SITE_ID = 'site-id'
+process.env.NETLIFY_AUTH_TOKEN = 'dummy-netlify-auth-token'
+process.env.NETLIFY_SITE_ID = 'dummy-netlify-site-id'
 
 describe('Draft deploy', () => {
-  const expectedDeployFolder = path.resolve(process.cwd(), 'publish-dir')
+  const expectedSiteId = 'dummy-netlify-site-id'
+  const expectedDeployFolder = path.resolve(process.cwd(), 'my-publish-dir')
 
   test('deploy should have draft true when production-deploy input is false', async () => {
     mocked(defaultInputs.productionDeploy).mockReturnValue(false)
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith('site-id', expectedDeployFolder, {
+    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
       draft: true
     })
   })
@@ -39,7 +40,7 @@ describe('Draft deploy', () => {
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith('site-id', expectedDeployFolder, {
+    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
       draft: false
     })
   })
@@ -52,7 +53,7 @@ describe('Draft deploy', () => {
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith('site-id', expectedDeployFolder, {
+    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
       draft: false
     })
   })
@@ -65,7 +66,7 @@ describe('Draft deploy', () => {
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith('site-id', expectedDeployFolder, {
+    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
       draft: true
     })
   })
@@ -78,7 +79,7 @@ describe('Draft deploy', () => {
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith('site-id', expectedDeployFolder, {
+    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
       draft: true
     })
   })
