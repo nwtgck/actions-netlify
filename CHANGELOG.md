@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.1.2] - 2020-06-13
+### Added
+* Add "alias" input to deploy with alias [#178](https://github.com/nwtgck/actions-netlify/pull/178) by [@rajington](https://github.com/rajington)
+
 ## [1.1.1] - 2020-05-30
 ### Added
 * Add "netlify-config-path" input to specify path to `netlify.toml`
@@ -103,7 +107,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/nwtgck/actions-netlify/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/nwtgck/actions-netlify/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/nwtgck/actions-netlify/compare/v1.0.13...v1.1.0
 [1.0.13]: https://github.com/nwtgck/actions-netlify/compare/v1.0.12...v1.0.13
