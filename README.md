@@ -52,6 +52,7 @@ jobs:
 
 ### Optional inputs
 - `production-branch` (e.g. "master")
+- `production-deploy`: Deploy as Netlify production deploy (default: false)
 - `github-token: ${{ secrets.GITHUB_TOKEN }}`
 - `deploy-message` A custom deploy message to see on Netlify deployment (e.g. `${{ github.event.pull_request.title }}`)
 - `enable-pull-request-comment: true` Comment on pull request (default: true)

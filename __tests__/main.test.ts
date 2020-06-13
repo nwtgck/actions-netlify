@@ -130,7 +130,7 @@ describe('defaultInputs', () => {
       })
     })
 
-    test('it should be true when "false" specified', () => {
+    test('it should be false when "false" specified', () => {
       withInput('overwrites-pull-request-comment', 'false', () => {
         const b: boolean = defaultInputs.overwritesPullRequestComment()
         expect(b).toBe(false)
@@ -143,6 +143,27 @@ describe('defaultInputs', () => {
       withInput('alias', 'foo', () => {
         const alias: string | undefined = defaultInputs.alias()
         expect(alias).toBe('foo')
+      })
+    })
+  })
+
+  describe('production deploy', () => {
+    test('it should be default value (false) when not specified', () => {
+      const b: boolean = defaultInputs.productionDeploy()
+      expect(b).toBe(false)
+    })
+
+    test('it should be true when "true" specified', () => {
+      withInput('production-deploy', 'true', () => {
+        const b: boolean = defaultInputs.productionDeploy()
+        expect(b).toBe(true)
+      })
+    })
+
+    test('it should be false when "false" specified', () => {
+      withInput('production-deploy', 'false', () => {
+        const b: boolean = defaultInputs.productionDeploy()
+        expect(b).toBe(false)
       })
     })
   })
