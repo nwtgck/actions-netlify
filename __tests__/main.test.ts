@@ -137,6 +137,15 @@ describe('defaultInputs', () => {
       })
     })
   })
+
+  describe('alias', () => {
+    test('it should be a string when specified', () => {
+      withInput('alias', 'foo', () => {
+        const alias: string | undefined = defaultInputs.alias()
+        expect(alias).toBe('foo')
+      })
+    })
+  })
 })
 
 // Old tests below
