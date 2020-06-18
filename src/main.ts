@@ -64,6 +64,7 @@ export async function run(inputs: Inputs): Promise<void> {
       return
     }
     const dir = inputs.publishDir()
+    const functionsDir: string | undefined = inputs.functionsDir()
     const deployMessage: string | undefined = inputs.deployMessage()
     const productionBranch: string | undefined = inputs.productionBranch()
     const enablePullRequestComment: boolean = inputs.enablePullRequestComment()
@@ -80,12 +81,16 @@ export async function run(inputs: Inputs): Promise<void> {
     const netlifyClient = new NetlifyAPI(netlifyAuthToken)
     // Resolve publish directory
     const deployFolder = path.resolve(process.cwd(), dir)
+    // Resolve functions directory
+    const functionsFolder =
+      functionsDir && path.resolve(process.cwd(), functionsDir)
     // Deploy to Netlify
     const deploy = await netlifyClient.deploy(siteId, deployFolder, {
       draft: !productionDeploy,
       message: deployMessage,
       configPath: netlifyConfigPath,
-      branch: alias
+      branch: alias,
+      fnDir: functionsFolder
     })
     // Create a message
     const message = productionDeploy

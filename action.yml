@@ -5,6 +5,9 @@ inputs:
   publish-dir:
     description: Publish directory
     required: true
+  functions-dir:
+    description: Functions directory
+    required: false
   deploy-message:
     description: Custom deploy message for Netlify
     required: false
