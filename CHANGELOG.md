@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.1.4] - 2020-06-18
+### Added
+* Add "functions-dir" input to deploy Netlify Functions [#191](https://github.com/nwtgck/actions-netlify/pull/191) by [@fmr](https://github.com/fmr)
+
 ## [1.1.3] - 2020-06-13
 ### Added
 * Add "production-deploy" input to deploy as Netlify production deploy [#188](https://github.com/nwtgck/actions-netlify/pull/188) by [@gvdp](https://github.com/gvdp)
@@ -111,7 +115,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.3...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.4...HEAD
+[1.1.4]: https://github.com/nwtgck/actions-netlify/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/nwtgck/actions-netlify/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/nwtgck/actions-netlify/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/nwtgck/actions-netlify/compare/v1.1.0...v1.1.1
