@@ -1,5 +1,5 @@
 import * as path from 'path'
-import { mocked } from 'ts-jest/utils'
+import {mocked} from 'ts-jest/utils'
 import {defaultInputs} from '../src/inputs'
 import {context} from '@actions/github'
 import {run} from '../src/main'
@@ -30,9 +30,13 @@ describe('Draft deploy', () => {
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
-      draft: true
-    })
+    expect(mockDeploy).toHaveBeenCalledWith(
+      expectedSiteId,
+      expectedDeployFolder,
+      {
+        draft: true
+      }
+    )
   })
 
   test('deploy should have draft false when production-deploy input is true', async () => {
@@ -40,9 +44,13 @@ describe('Draft deploy', () => {
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
-      draft: false
-    })
+    expect(mockDeploy).toHaveBeenCalledWith(
+      expectedSiteId,
+      expectedDeployFolder,
+      {
+        draft: false
+      }
+    )
   })
 
   test('deploy should have draft false when production-branch matches context ref', async () => {
@@ -53,9 +61,13 @@ describe('Draft deploy', () => {
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
-      draft: false
-    })
+    expect(mockDeploy).toHaveBeenCalledWith(
+      expectedSiteId,
+      expectedDeployFolder,
+      {
+        draft: false
+      }
+    )
   })
 
   test('deploy should have draft true when production-branch doesnt match context ref', async () => {
@@ -66,9 +78,13 @@ describe('Draft deploy', () => {
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
-      draft: true
-    })
+    expect(mockDeploy).toHaveBeenCalledWith(
+      expectedSiteId,
+      expectedDeployFolder,
+      {
+        draft: true
+      }
+    )
   })
 
   test('deploy should have draft true when production-branch is not defined', async () => {
@@ -79,8 +95,12 @@ describe('Draft deploy', () => {
 
     await run(defaultInputs)
 
-    expect(mockDeploy).toHaveBeenCalledWith(expectedSiteId, expectedDeployFolder, {
-      draft: true
-    })
+    expect(mockDeploy).toHaveBeenCalledWith(
+      expectedSiteId,
+      expectedDeployFolder,
+      {
+        draft: true
+      }
+    )
   })
 })
