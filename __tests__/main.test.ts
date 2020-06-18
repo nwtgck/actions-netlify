@@ -31,6 +31,20 @@ describe('defaultInputs', () => {
     })
   })
 
+  describe('functionsDir', () => {
+    test('it should be a string when specified', () => {
+      withInput('functions-dir', './my_functions_dir', () => {
+        const functionsDir: string | undefined = defaultInputs.functionsDir()
+        expect(functionsDir).toBe('./my_functions_dir')
+      })
+    })
+
+    test('it should be undefined when not specified', () => {
+      const functionsDir: string | undefined = defaultInputs.functionsDir()
+      expect(functionsDir).toBe(undefined)
+    })
+  })
+
   describe('deployMessage', () => {
     test('it should be a string when specified', () => {
       withInput('deploy-message', 'Deploy with GitHub Actions', () => {
