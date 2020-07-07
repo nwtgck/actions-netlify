@@ -29,7 +29,7 @@
     "netlify": "^4.3.5"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.3",
+    "@types/jest": "^26.0.4",
     "@types/node": "^12.12.47",
     "@typescript-eslint/parser": "^3.5.0",
     "@zeit/ncc": "^0.22.3",
