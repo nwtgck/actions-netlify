@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.1.6] - 2020-08-17
+### Changed
+* Update dependencies
+
+## Fixed
+* Ignore alias deployment when production deployment
+
 ## [1.1.5] - 2020-06-27
 ### Changed
 * Update dependencies
@@ -119,7 +126,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.5...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.6...HEAD
+[1.1.6]: https://github.com/nwtgck/actions-netlify/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/nwtgck/actions-netlify/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/nwtgck/actions-netlify/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/nwtgck/actions-netlify/compare/v1.1.2...v1.1.3
