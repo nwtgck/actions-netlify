@@ -94,9 +94,15 @@ export async function run(inputs: Inputs): Promise<void> {
       draft: !productionDeploy,
       message: deployMessage,
       configPath: netlifyConfigPath,
-      branch: alias,
+      ...(productionDeploy ? {} : {branch: alias}),
       fnDir: functionsFolder
     })
+    if (productionDeploy && alias !== undefined) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `Only production deployment was conducted. The alias ${alias} was ignored.`
+      )
+    }
     // Create a message
     const message = productionDeploy
       ? `🎉 Published on ${deploy.deploy.ssl_url} as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
