@@ -145,17 +145,6 @@ export async function run(inputs: Inputs): Promise<void> {
       }
     }
 
-    if (context.issue.number === undefined) {
-      try {
-        const environment = productionDeploy ? 'production' : 'commit'
-        // Create GitHub Deployment
-        await createGitHubDeployment(githubClient, deployUrl, environment)
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err)
-      }
-    }
-
     // If it is a pull request and enable comment on pull request
     if (context.issue.number !== undefined) {
       if (enablePullRequestComment) {
@@ -186,19 +175,19 @@ export async function run(inputs: Inputs): Promise<void> {
           })
         }
       }
+    }
 
-      try {
-        const environmentUrl = deploy.deploy.deploy_ssl_url
-        // Create GitHub Deployment
-        await createGitHubDeployment(
-          githubClient,
-          environmentUrl,
-          'pull request'
-        )
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err)
-      }
+    try {
+      const environment = productionDeploy
+        ? 'production'
+        : context.issue.number !== undefined
+        ? 'pull request'
+        : 'commit'
+      // Create GitHub Deployment
+      await createGitHubDeployment(githubClient, deployUrl, environment)
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err)
     }
   } catch (error) {
     core.setFailed(error.message)
