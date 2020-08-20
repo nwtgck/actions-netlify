@@ -13,6 +13,7 @@ export interface Inputs {
   overwritesPullRequestComment(): boolean
   netlifyConfigPath(): string | undefined
   alias(): string | undefined
+  githubDeploymentEnvironment(): string | undefined
 }
 
 export const defaultInputs: Inputs = {
@@ -54,5 +55,8 @@ export const defaultInputs: Inputs = {
   },
   alias() {
     return core.getInput('alias') || undefined
+  },
+  githubDeploymentEnvironment(): string | undefined {
+    return core.getInput('github-deployment-environment') || undefined
   }
 }

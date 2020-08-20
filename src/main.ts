@@ -178,11 +178,13 @@ export async function run(inputs: Inputs): Promise<void> {
     }
 
     try {
-      const environment = productionDeploy
-        ? 'production'
-        : context.issue.number !== undefined
-        ? 'pull request'
-        : 'commit'
+      const environment =
+        inputs.githubDeploymentEnvironment() ??
+        (productionDeploy
+          ? 'production'
+          : context.issue.number !== undefined
+          ? 'pull request'
+          : 'commit')
       // Create GitHub Deployment
       await createGitHubDeployment(githubClient, deployUrl, environment)
     } catch (err) {
