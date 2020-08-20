@@ -191,6 +191,22 @@ export async function run(inputs: Inputs): Promise<void> {
       // eslint-disable-next-line no-console
       console.error(err)
     }
+
+    try {
+      await githubClient.repos.createCommitStatus({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        context: 'Netlify',
+        description: 'Netlify deployment',
+        state: 'success',
+        sha: context.sha,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        target_url: deployUrl
+      })
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err)
+    }
   } catch (error) {
     core.setFailed(error.message)
   }
