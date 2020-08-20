@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.1.7] - 2020-08-20
+### Added
+* Add "'github-deployment-environment" input to specify environment name of GitHub Deployments
+
 ## [1.1.6] - 2020-08-17
 ### Changed
 * Update dependencies
@@ -126,7 +130,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.6...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.7...HEAD
+[1.1.7]: https://github.com/nwtgck/actions-netlify/compare/v1.1.6...v1.1.7
 [1.1.6]: https://github.com/nwtgck/actions-netlify/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/nwtgck/actions-netlify/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/nwtgck/actions-netlify/compare/v1.1.3...v1.1.4
