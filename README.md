@@ -58,6 +58,7 @@ jobs:
 - `deploy-message` A custom deploy message to see on Netlify deployment (e.g. `${{ github.event.pull_request.title }}`)
 - `enable-pull-request-comment: true` Comment on pull request (default: true)
 - `enable-commit-comment: true` Comment on GitHub commit (default: true)
+- `enable-commit-status: true` GitHub commit status (default: true)
 - `overwrites-pull-request-comment: true` Overwrites comment on pull request (default: true)
 - `netlify-config-path: ./netlify.toml` Path to `netlify.toml` (default: undefined)
 - `functions-dir` Netlify functions output directory (default: undefined)
