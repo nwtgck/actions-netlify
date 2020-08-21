@@ -26,6 +26,9 @@ inputs:
   enable-commit-comment:
     description: Enable commit comment
     required: false
+  enable-commit-status:
+    description: Enable GitHub commit status
+    required: false
   overwrites-pull-request-comment:
     description: Overwrites pull request comment
     required: false

@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.1.9] - 2020-08-21
+### Added
+* Add "enable-commit-status" input
+
 ## [1.1.8] - 2020-08-20
 ### Added
 * Add GitHub commit status
@@ -134,7 +138,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.8...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.9...HEAD
+[1.1.9]: https://github.com/nwtgck/actions-netlify/compare/v1.1.8...v1.1.9
 [1.1.8]: https://github.com/nwtgck/actions-netlify/compare/v1.1.7...v1.1.8
 [1.1.7]: https://github.com/nwtgck/actions-netlify/compare/v1.1.6...v1.1.7
 [1.1.6]: https://github.com/nwtgck/actions-netlify/compare/v1.1.5...v1.1.6
