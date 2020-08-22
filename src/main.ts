@@ -194,13 +194,16 @@ export async function run(inputs: Inputs): Promise<void> {
 
     if (inputs.enableCommitStatus()) {
       try {
+        // When "pull_request", context.payload.pull_request?.head.sha is expected SHA.
+        // (base: https://github.community/t/github-sha-isnt-the-value-expected/17903/2)
+        const sha = context.payload.pull_request?.head.sha ?? context.sha
         await githubClient.repos.createCommitStatus({
           owner: context.repo.owner,
           repo: context.repo.repo,
           context: 'Netlify',
           description: 'Netlify deployment',
           state: 'success',
-          sha: context.sha,
+          sha,
           // eslint-disable-next-line @typescript-eslint/camelcase
           target_url: deployUrl
         })
