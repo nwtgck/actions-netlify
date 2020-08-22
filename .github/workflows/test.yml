@@ -1,6 +1,5 @@
 name: "build-test"
 on:
-  push:
   pull_request:
     types: [opened, synchronize]
 
