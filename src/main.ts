@@ -197,6 +197,10 @@ export async function run(inputs: Inputs): Promise<void> {
         // When "pull_request", context.payload.pull_request?.head.sha is expected SHA.
         // (base: https://github.community/t/github-sha-isnt-the-value-expected/17903/2)
         const sha = context.payload.pull_request?.head.sha ?? context.sha
+        // eslint-disable-next-line no-console
+        console.log(context.payload.pull_request?.head.sha)
+        // eslint-disable-next-line no-console
+        console.log({sha})
         await githubClient.repos.createCommitStatus({
           owner: context.repo.owner,
           repo: context.repo.repo,
