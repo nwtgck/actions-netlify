@@ -24,23 +24,23 @@
   "author": "Ryo Ota <nwtgck@nwtgck.org> (https://github.com/nwtgck)",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.4",
+    "@actions/core": "^1.2.5",
     "@actions/github": "^4.0.0",
-    "netlify": "^4.3.11"
+    "netlify": "^4.3.13"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.10",
-    "@types/node": "^12.12.54",
+    "@types/jest": "^26.0.13",
+    "@types/node": "^12.12.55",
     "@typescript-eslint/parser": "^3.9.1",
     "@vercel/ncc": "^0.23.0",
     "eslint": "^5.16.0",
     "eslint-plugin-github": "^2.0.0",
-    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-jest": "^24.0.0",
     "jest": "^26.4.2",
     "jest-circus": "^26.4.2",
     "js-yaml": "^3.14.0",
-    "prettier": "^2.0.5",
-    "ts-jest": "^26.2.0",
+    "prettier": "^2.1.1",
+    "ts-jest": "^26.3.0",
     "typescript": "^3.9.7"
   }
 }
