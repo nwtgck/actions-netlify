@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.1.11] - 2020-09-22
+### Changed
+* Update dependencies
+
 ## [1.1.10] - 2020-08-22
 ### Fixed
 * Support Github commit status triggered by "pull_request" event
@@ -142,7 +146,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.10...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.1.11...HEAD
+[1.1.11]: https://github.com/nwtgck/actions-netlify/compare/v1.1.10...v1.1.11
 [1.1.10]: https://github.com/nwtgck/actions-netlify/compare/v1.1.9...v1.1.10
 [1.1.9]: https://github.com/nwtgck/actions-netlify/compare/v1.1.8...v1.1.9
 [1.1.8]: https://github.com/nwtgck/actions-netlify/compare/v1.1.7...v1.1.8

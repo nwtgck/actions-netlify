@@ -1,5 +1,6 @@
 # TODO: Remove because /dist/typescript should not be generated automatically
 /dist/typescript
+/dist/typescript1
 
 # Dependency directory
 node_modules
