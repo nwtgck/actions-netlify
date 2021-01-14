@@ -2,7 +2,6 @@ name: "build-test"
 on:
   push:
   pull_request:
-    types: [opened, synchronize]
 
 jobs:
   build: # make sure build/ci work properly

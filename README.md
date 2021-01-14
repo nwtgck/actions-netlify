@@ -19,7 +19,6 @@ name: Build and Deploy to Netlify
 on:
   push:
   pull_request:
-    types: [opened, synchronize]
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -48,7 +47,7 @@ jobs:
 ### Required inputs and env
 - `publish-dir` (e.g. "dist", "_site")
 - `NETLIFY_AUTH_TOKEN`: [Personal access tokens](https://app.netlify.com/user/applications#personal-access-tokens) > New access token
-- `NETLIFY_SITE_ID`: team page > your site > Settings > Site details > Site information > API ID 
+- `NETLIFY_SITE_ID`: team page > your site > Settings > Site details > Site information > API ID
   - NOTE: API ID is `NETLIFY_SITE_ID`.
 
 ### Optional inputs
