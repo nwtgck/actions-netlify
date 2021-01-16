@@ -53,9 +53,8 @@ async function createGitHubDeployment(
     owner: context.repo.owner,
     repo: context.repo.repo,
     // eslint-disable-next-line @typescript-eslint/camelcase
-    deployment_id: (deployment as OctokitResponse<
-      ReposCreateDeploymentResponseData
-    >).data.id
+    deployment_id: (deployment as OctokitResponse<ReposCreateDeploymentResponseData>)
+      .data.id
   })
 }
 
