@@ -20,7 +20,7 @@ const handlers = {
 			.pipe(hasher)
 			.on('error', reject)
 			.on('finish', () => {
-				const {buffer} = hasher.read();
+				const {buffer} = new Uint8Array(hasher.read());
 				resolve({value: buffer, transferList: [buffer]});
 			});
 	}),
@@ -35,8 +35,8 @@ const handlers = {
 			hasher.update(input);
 		}
 
-		const hash = hasher.digest().buffer;
-		return {value: hash, transferList: [hash]};
+		const {buffer} = new Uint8Array(hasher.digest());
+		return {value: buffer, transferList: [buffer]};
 	}
 };
 
