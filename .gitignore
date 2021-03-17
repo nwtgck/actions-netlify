@@ -9,6 +9,7 @@
 /dist/typescript7
 /dist/typescript8
 /dist/typescript9
+/dist/esbuild
 
 # Dependency directory
 node_modules
