@@ -1,7 +1,10 @@
 import * as core from '@actions/core'
 import {context, getOctokit} from '@actions/github'
 import type {GitHub} from '@actions/github/lib/utils'
-import {ReposCreateDeploymentResponseData} from '@octokit/types/dist-types/generated/Endpoints'
+import {
+  ReposCreateDeploymentResponseData,
+  IssuesGetCommentResponseData
+} from '@octokit/types/dist-types/generated/Endpoints'
 import {OctokitResponse} from '@octokit/types/dist-types/OctokitResponse'
 import NetlifyAPI from 'netlify'
 import * as path from 'path'
@@ -28,6 +31,18 @@ async function findIssueComment(
     }
   }
   return undefined
+}
+
+async function getIssueComment(
+  githubClient: InstanceType<typeof GitHub>,
+  commentId: number
+): Promise<OctokitResponse<IssuesGetCommentResponseData>> {
+  return await githubClient.issues.getComment({
+    owner: context.issue.owner,
+    repo: context.issue.repo,
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    comment_id: commentId
+  })
 }
 
 async function createGitHubDeployment(
@@ -105,7 +120,7 @@ export async function run(inputs: Inputs): Promise<void> {
     // Create a message
     const message = productionDeploy
       ? `🎉 Published on ${deploy.deploy.ssl_url} as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
-      : `🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
+      : `- Deployed ${context.payload.pull_request?.head.sha} on ${deploy.deploy.deploy_ssl_url}`
     // Print the URL
     process.stdout.write(`${message}\n`)
 
@@ -155,13 +170,25 @@ export async function run(inputs: Inputs): Promise<void> {
 
         // NOTE: if not overwrite, commentId is always undefined
         if (commentId !== undefined) {
+          const comment = await getIssueComment(githubClient, commentId)
+          const oldCommentBody = comment.data.body
+            .replace(`${commentIdentifierString}`, '')
+            .replace(
+              '<details>\n<summary>👉 Click to expand old deploys</summary>\n',
+              ''
+            )
+            .replace('</details>', '')
+            .replace(/^\n/gm, '')
+            .trim()
+          const newCommentBody = `${commentIdentifierString}\n${message}\n\n<details>\n<summary>👉 Click to expand old deploys</summary>\n\n${oldCommentBody}\n\n</details>\n`
+
           // Update comment of the deploy URL
           await githubClient.issues.updateComment({
             owner: context.issue.owner,
             repo: context.issue.repo,
             // eslint-disable-next-line @typescript-eslint/camelcase
             comment_id: commentId,
-            body: markdownComment
+            body: newCommentBody
           })
         } else {
           // Comment the deploy URL
