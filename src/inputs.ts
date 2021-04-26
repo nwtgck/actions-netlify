@@ -15,6 +15,7 @@ export interface Inputs {
   netlifyConfigPath(): string | undefined
   alias(): string | undefined
   githubDeploymentEnvironment(): string | undefined
+  githubDeploymentDescription(): string | undefined
 }
 
 export const defaultInputs: Inputs = {
@@ -63,5 +64,8 @@ export const defaultInputs: Inputs = {
   },
   githubDeploymentEnvironment(): string | undefined {
     return core.getInput('github-deployment-environment') || undefined
+  },
+  githubDeploymentDescription(): string | undefined {
+    return core.getInput('github-deployment-description') || undefined
   }
 }
