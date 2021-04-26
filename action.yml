@@ -41,6 +41,9 @@ inputs:
   github-deployment-environment:
     description: Environment name of GitHub Deployments
     required: false
+  github-deployment-description:
+    description: Description of the GitHub Deployment
+    required: false
 outputs:
   deploy-url:
     description: Deploy URL

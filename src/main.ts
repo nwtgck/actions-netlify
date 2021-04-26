@@ -33,7 +33,8 @@ async function findIssueComment(
 async function createGitHubDeployment(
   githubClient: InstanceType<typeof GitHub>,
   environmentUrl: string,
-  environment: string
+  environment: string,
+  description?: string
 ): Promise<void> {
   const {ref} = context
   const deployment = await githubClient.repos.createDeployment({
@@ -43,6 +44,7 @@ async function createGitHubDeployment(
     repo: context.repo.repo,
     ref,
     environment,
+    description,
     // eslint-disable-next-line @typescript-eslint/camelcase
     required_contexts: []
   })
@@ -184,8 +186,15 @@ export async function run(inputs: Inputs): Promise<void> {
           : context.issue.number !== undefined
           ? 'pull request'
           : 'commit')
+
+      const description = inputs.githubDeploymentEnvironment()
       // Create GitHub Deployment
-      await createGitHubDeployment(githubClient, deployUrl, environment)
+      await createGitHubDeployment(
+        githubClient,
+        deployUrl,
+        environment,
+        description
+      )
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err)
