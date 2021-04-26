@@ -34,7 +34,7 @@ async function createGitHubDeployment(
   githubClient: InstanceType<typeof GitHub>,
   environmentUrl: string,
   environment: string,
-  description?: string
+  description: string | undefined
 ): Promise<void> {
   const {ref} = context
   const deployment = await githubClient.repos.createDeployment({
