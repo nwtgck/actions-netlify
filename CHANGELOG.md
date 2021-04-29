@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Added
 * Add "github-deployment-description" input [#513](https://github.com/nwtgck/actions-netlify/pull/513) by [@scopsy](https://github.com/scopsy)
 
+### Fixed
+* Make deployment link on pull request if CI is running on pull request [#516](https://github.com/nwtgck/actions-netlify/pull/516) by [@nojvek](https://github.com/nojvek)
+
 ## [1.1.13] - 2021-01-28
 ### Changed
 * Update dependencies
