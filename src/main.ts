@@ -45,13 +45,13 @@ async function createGitHubDeployment(
   environment: string,
   description: string | undefined
 ): Promise<void> {
-  const {ref} = context
+  const deployRef = context.payload.pull_request?.head.sha ?? context.sha
   const deployment = await githubClient.repos.createDeployment({
     // eslint-disable-next-line @typescript-eslint/camelcase
     auto_merge: false,
     owner: context.repo.owner,
     repo: context.repo.repo,
-    ref,
+    ref: deployRef,
     environment,
     description,
     // eslint-disable-next-line @typescript-eslint/camelcase
