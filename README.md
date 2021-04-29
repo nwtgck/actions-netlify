@@ -28,7 +28,7 @@ jobs:
       # ( Build to ./dist or other directory... )
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.1
+        uses: nwtgck/actions-netlify@v1.2
         with:
           publish-dir: './dist'
           production-branch: master
@@ -65,6 +65,7 @@ jobs:
   - `alias: ${{ github.head_ref }}` replicates the [branch deploy prefix](https://docs.netlify.com/site-deploys/overview/#definitions)
   - `alias: deploy-preview-${{ github.event.number }}` replicates the [deploy preview prefix](https://docs.netlify.com/site-deploys/overview/#definitions)
 - `github-deployment-environment` Environment name of GitHub Deployments
+- `github-deployment-description` Description of the GitHub Deployment
 
 ### Paths are relative to the project's root
 All paths (eg, `publish-dir`, `netlify-config-path`, `functions-dir`) are relative to the project's root or absolute paths.
