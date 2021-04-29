@@ -1,0 +1,90 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 99
+  reviewers:
+  - nwtgck
+  assignees:
+  - nwtgck
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - ">= 13.a, < 14"
+  - dependency-name: "@types/node"
+    versions:
+    - ">= 14.a, < 15"
+  - dependency-name: netlify
+    versions:
+    - 6.1.10
+    - 6.1.11
+    - 6.1.13
+    - 6.1.14
+    - 6.1.15
+    - 6.1.17
+    - 6.1.19
+    - 6.1.20
+    - 6.1.21
+    - 6.1.22
+    - 6.1.23
+    - 6.1.5
+  - dependency-name: "@types/node"
+    versions:
+    - 12.20.0
+    - 12.20.10
+    - 12.20.2
+    - 12.20.3
+    - 12.20.5
+    - 15.0.0
+  - dependency-name: eslint-plugin-jest
+    versions:
+    - 24.1.10
+    - 24.1.4
+    - 24.1.6
+    - 24.1.7
+    - 24.1.8
+    - 24.1.9
+    - 24.2.0
+    - 24.2.1
+    - 24.3.0
+    - 24.3.1
+    - 24.3.3
+    - 24.3.4
+    - 24.3.5
+    - 24.3.6
+  - dependency-name: ts-jest
+    versions:
+    - 26.5.3
+    - 26.5.5
+  - dependency-name: "@actions/core"
+    versions:
+    - 1.2.7
+  - dependency-name: "@typescript-eslint/parser"
+    versions:
+    - 4.14.2
+    - 4.16.0
+    - 4.16.1
+    - 4.17.0
+    - 4.19.0
+    - 4.20.0
+    - 4.21.0
+    - 4.22.0
+  - dependency-name: "@vercel/ncc"
+    versions:
+    - 0.28.0
+    - 0.28.1
+    - 0.28.2
+    - 0.28.3
+  - dependency-name: y18n
+    versions:
+    - 4.0.1
+  - dependency-name: eslint-plugin-github
+    versions:
+    - 4.1.1
+  - dependency-name: typescript
+    versions:
+    - 4.1.4
+    - 4.2.2
