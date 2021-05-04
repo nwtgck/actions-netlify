@@ -16,6 +16,7 @@ export interface Inputs {
   alias(): string | undefined
   githubDeploymentEnvironment(): string | undefined
   githubDeploymentDescription(): string | undefined
+  failsWithoutCredentials(): boolean
 }
 
 export const defaultInputs: Inputs = {
@@ -67,5 +68,9 @@ export const defaultInputs: Inputs = {
   },
   githubDeploymentDescription(): string | undefined {
     return core.getInput('github-deployment-description') || undefined
+  },
+  failsWithoutCredentials(): boolean {
+    // Default: false
+    return core.getInput('fails-without-credentials') === 'true'
   }
 }
