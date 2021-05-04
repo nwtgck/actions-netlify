@@ -1,14 +1,4 @@
-# TODO: Remove because /dist/typescript should not be generated automatically
-/dist/typescript
-/dist/typescript1
-/dist/typescript2
-/dist/typescript3
-/dist/typescript4
-/dist/typescript5
-/dist/typescript6
-/dist/typescript7
-/dist/typescript8
-/dist/typescript9
+# TODO: Remove because /dist/esbuild should not be generated automatically
 /dist/esbuild
 
 # Dependency directory
