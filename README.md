@@ -66,6 +66,7 @@ jobs:
   - `alias: deploy-preview-${{ github.event.number }}` replicates the [deploy preview prefix](https://docs.netlify.com/site-deploys/overview/#definitions)
 - `github-deployment-environment` Environment name of GitHub Deployments
 - `github-deployment-description` Description of the GitHub Deployment
+- `fails-without-credentials` Fails if no credentials provided (default: false)
 
 ### Paths are relative to the project's root
 All paths (eg, `publish-dir`, `netlify-config-path`, `functions-dir`) are relative to the project's root or absolute paths.
