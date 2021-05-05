@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.2.1] - 2021-05-05
+### Added
+* Add "fails-without-credentials" input to fail if the credentials not provided [#532](https://github.com/nwtgck/actions-netlify/pull/532)
+
+### Changed
+* Update dependencies
+
 ## [1.2.0] - 2021-04-29
 ### Changed
 * Update dependencies
@@ -12,6 +19,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Added
 * Add "github-deployment-description" input [#513](https://github.com/nwtgck/actions-netlify/pull/513) by [@scopsy](https://github.com/scopsy)
+
+### Fixed
+* Make deployment link on pull request if CI is running on pull request [#516](https://github.com/nwtgck/actions-netlify/pull/516) by [@nojvek](https://github.com/nojvek)
 
 ## [1.1.13] - 2021-01-28
 ### Changed
@@ -162,7 +172,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/nwtgck/actions-netlify/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/nwtgck/actions-netlify/compare/v1.1.13...v1.2.0
 [1.1.13]: https://github.com/nwtgck/actions-netlify/compare/v1.1.12...v1.1.13
 [1.1.12]: https://github.com/nwtgck/actions-netlify/compare/v1.1.11...v1.1.12

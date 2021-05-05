@@ -1,6 +1,6 @@
 {
   "name": "actions-netlify",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "GitHub Actions for Netlify",
   "main": "lib/main.js",
@@ -26,13 +26,13 @@
   "dependencies": {
     "@actions/core": "^1.2.7",
     "@actions/github": "^4.0.0",
-    "netlify": "^6.1.24"
+    "netlify": "^6.1.26"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "@types/node": "^12.20.10",
-    "@typescript-eslint/parser": "^4.22.0",
-    "@vercel/ncc": "^0.28.4",
+    "@types/node": "^12.20.12",
+    "@typescript-eslint/parser": "^4.22.1",
+    "@vercel/ncc": "^0.28.5",
     "eslint": "^5.16.0",
     "eslint-plugin-github": "^2.0.0",
     "eslint-plugin-jest": "^24.3.6",
