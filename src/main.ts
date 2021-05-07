@@ -200,7 +200,7 @@ export async function run(inputs: Inputs): Promise<void> {
           ? 'pull request'
           : 'commit')
 
-      const description = inputs.githubDeploymentEnvironment()
+      const description = inputs.githubDeploymentDescription()
       // Create GitHub Deployment
       await createGitHubDeployment(
         githubClient,
