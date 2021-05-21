@@ -44,6 +44,9 @@ inputs:
   github-deployment-description:
     description: Description of the GitHub Deployment
     required: false
+  github-deployment-ref:
+    description: GitHub Deployment ref
+    required: false
   fails-without-credentials:
     description: Fails if no credentials provided
     required: false

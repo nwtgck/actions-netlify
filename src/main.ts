@@ -41,11 +41,15 @@ async function findIssueComment(
 
 async function createGitHubDeployment(
   githubClient: InstanceType<typeof GitHub>,
+  inputs: Inputs,
   environmentUrl: string,
   environment: string,
   description: string | undefined
 ): Promise<void> {
-  const deployRef = context.payload.pull_request?.head.sha ?? context.sha
+  const deployRef =
+    inputs.githubDeploymentRef() ??
+    context.payload.pull_request?.head.sha ??
+    context.sha
   const deployment = await githubClient.repos.createDeployment({
     // eslint-disable-next-line @typescript-eslint/camelcase
     auto_merge: false,
@@ -204,6 +208,7 @@ export async function run(inputs: Inputs): Promise<void> {
       // Create GitHub Deployment
       await createGitHubDeployment(
         githubClient,
+        inputs,
         deployUrl,
         environment,
         description

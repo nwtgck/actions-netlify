@@ -16,6 +16,7 @@ export interface Inputs {
   alias(): string | undefined
   githubDeploymentEnvironment(): string | undefined
   githubDeploymentDescription(): string | undefined
+  githubDeploymentRef(): string | undefined
   failsWithoutCredentials(): boolean
 }
 
@@ -68,6 +69,9 @@ export const defaultInputs: Inputs = {
   },
   githubDeploymentDescription(): string | undefined {
     return core.getInput('github-deployment-description') || undefined
+  },
+  githubDeploymentRef(): string | undefined {
+    return core.getInput('github-deployment-ref') || undefined
   },
   failsWithoutCredentials(): boolean {
     // Default: false
