@@ -62,9 +62,8 @@ describe('defaultInputs', () => {
   describe('productionBranch', () => {
     test('it should be a string when specified', () => {
       withInput('production-branch', 'master', () => {
-        const productionBranch:
-          | string
-          | undefined = defaultInputs.productionBranch()
+        const productionBranch: string | undefined =
+          defaultInputs.productionBranch()
         expect(productionBranch).toBe('master')
       })
     })
