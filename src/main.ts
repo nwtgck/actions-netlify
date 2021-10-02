@@ -92,7 +92,7 @@ export async function run(inputs: Inputs): Promise<void> {
     const overwritesPullRequestComment: boolean =
       inputs.overwritesPullRequestComment()
     const netlifyConfigPath: string | undefined = inputs.netlifyConfigPath()
-    const alias: string | undefined = inputs.alias()
+    const alias: string | undefined = (inputs.alias() || "").replace("/", "-");
 
     const branchMatchesProduction: boolean =
       !!productionBranch && context.ref === `refs/heads/${productionBranch}`
