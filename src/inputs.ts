@@ -7,6 +7,7 @@ export interface Inputs {
   deployMessage(): string | undefined
   productionBranch(): string | undefined
   productionDeploy(): boolean
+  projectName(): string | undefined
   enablePullRequestComment(): boolean
   enableCommitComment(): boolean
   enableCommitStatus(): boolean
@@ -35,6 +36,9 @@ export const defaultInputs: Inputs = {
   productionDeploy(): boolean {
     // Default: false
     return core.getInput('production-deploy') === 'true'
+  },
+  projectName() {
+    return core.getInput('project-name') || undefined
   },
   enablePullRequestComment() {
     // Default: true

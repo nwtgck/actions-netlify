@@ -86,6 +86,7 @@ export async function run(inputs: Inputs): Promise<void> {
     const dir = inputs.publishDir()
     const functionsDir: string | undefined = inputs.functionsDir()
     const deployMessage: string | undefined = inputs.deployMessage()
+    const projectName: string | undefined = inputs.projectName()
     const productionBranch: string | undefined = inputs.productionBranch()
     const enablePullRequestComment: boolean = inputs.enablePullRequestComment()
     const enableCommitComment: boolean = inputs.enableCommitComment()
@@ -121,8 +122,10 @@ export async function run(inputs: Inputs): Promise<void> {
     }
     // Create a message
     const message = productionDeploy
-      ? `🎉 Published on ${deploy.deploy.ssl_url} as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
-      : `🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
+      ? `🎉 Published ${projectName || ''} on ${
+          deploy.deploy.ssl_url
+        } as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
+      : `🚀 Deployed ${projectName || ''} to ${deploy.deploy.deploy_ssl_url}`
     // Print the URL
     process.stdout.write(`${message}\n`)
 
