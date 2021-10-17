@@ -20,6 +20,9 @@ inputs:
   production-deploy:
       description: Indicate wether to deploy production build
       required: false
+  project-name:
+      description: Name of project
+      required: false
   enable-pull-request-comment:
       description: Enable pull request comment
       required: false
