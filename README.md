@@ -32,6 +32,7 @@ jobs:
         with:
           publish-dir: './dist'
           production-branch: master
+          project-name: "storybook"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
           enable-pull-request-comment: false
@@ -53,6 +54,7 @@ jobs:
 ### Optional inputs
 - `production-branch` (e.g. "master")
 - `production-deploy`: Deploy as Netlify production deploy (default: false)
+- `project-name`: Used in PR comment to visually differentiate between multiple deployments
 - `github-token: ${{ secrets.GITHUB_TOKEN }}`
 - `deploy-message` A custom deploy message to see on Netlify deployment (e.g. `${{ github.event.pull_request.title }}`)
 - `enable-pull-request-comment: true` Comment on pull request (default: true)
