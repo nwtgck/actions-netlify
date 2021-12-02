@@ -29,6 +29,9 @@ inputs:
   enable-commit-comment:
     description: Enable commit comment
     required: false
+  enable-deployment-status:
+    description: Enable GitHub deployment status
+    required: false
   enable-commit-status:
     description: Enable GitHub commit status
     required: false

@@ -11,6 +11,7 @@ export interface Inputs {
   enablePullRequestComment(): boolean
   enableCommitComment(): boolean
   enableCommitStatus(): boolean
+  enableDeploymentStatus(): boolean
   githubToken(): string
   overwritesPullRequestComment(): boolean
   netlifyConfigPath(): string | undefined
@@ -47,6 +48,10 @@ export const defaultInputs: Inputs = {
   enableCommitComment() {
     // Default: true
     return (core.getInput('enable-commit-comment') || 'true') === 'true'
+  },
+  enableDeploymentStatus() {
+    // Default: true
+    return (core.getInput('enable-deployment-status') || 'true') === 'true'
   },
   enableCommitStatus() {
     // Default: true

@@ -43,7 +43,8 @@ async function createGitHubDeployment(
   githubClient: InstanceType<typeof GitHub>,
   environmentUrl: string,
   environment: string,
-  description: string | undefined
+  description: string | undefined,
+  enableDeploymentStatus: boolean
 ): Promise<void> {
   const deployRef = context.payload.pull_request?.head.sha ?? context.sha
   const deployment = await githubClient.repos.createDeployment({
@@ -57,17 +58,19 @@ async function createGitHubDeployment(
     // eslint-disable-next-line @typescript-eslint/camelcase
     required_contexts: []
   })
-  await githubClient.repos.createDeploymentStatus({
-    state: 'success',
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    environment_url: environmentUrl,
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    deployment_id: (
-      deployment as OctokitResponse<ReposCreateDeploymentResponseData>
-    ).data.id
-  })
+  if (enableDeploymentStatus) {
+    await githubClient.repos.createDeploymentStatus({
+      state: 'success',
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      environment_url: environmentUrl,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      deployment_id: (
+        deployment as OctokitResponse<ReposCreateDeploymentResponseData>
+      ).data.id
+    })
+  }
 }
 
 export async function run(inputs: Inputs): Promise<void> {
@@ -90,6 +93,7 @@ export async function run(inputs: Inputs): Promise<void> {
     const productionBranch: string | undefined = inputs.productionBranch()
     const enablePullRequestComment: boolean = inputs.enablePullRequestComment()
     const enableCommitComment: boolean = inputs.enableCommitComment()
+    const enableDeploymentStatus: boolean = inputs.enableDeploymentStatus()
     const overwritesPullRequestComment: boolean =
       inputs.overwritesPullRequestComment()
     const netlifyConfigPath: string | undefined = inputs.netlifyConfigPath()
@@ -211,7 +215,8 @@ export async function run(inputs: Inputs): Promise<void> {
         githubClient,
         deployUrl,
         environment,
-        description
+        description,
+        enableDeploymentStatus
       )
     } catch (err) {
       // eslint-disable-next-line no-console
