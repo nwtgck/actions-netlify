@@ -43,8 +43,7 @@ async function createGitHubDeployment(
   githubClient: InstanceType<typeof GitHub>,
   environmentUrl: string,
   environment: string,
-  description: string | undefined,
-  enableDeploymentStatus: boolean
+  description: string | undefined
 ): Promise<void> {
   const deployRef = context.payload.pull_request?.head.sha ?? context.sha
   const deployment = await githubClient.repos.createDeployment({
@@ -58,24 +57,18 @@ async function createGitHubDeployment(
     // eslint-disable-next-line @typescript-eslint/camelcase
     required_contexts: []
   })
-  if (enableDeploymentStatus) {
-    // eslint-disable-next-line no-console
-    console.warn(`Deployment status is enabled. Sending.`)
-    await githubClient.repos.createDeploymentStatus({
-      state: 'success',
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      environment_url: environmentUrl,
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      deployment_id: (
-        deployment as OctokitResponse<ReposCreateDeploymentResponseData>
-      ).data.id
-    })
-  } else {
-    // eslint-disable-next-line no-console
-    console.warn(`Deployment status is disabled. Ignoring.`)
-  }
+
+  await githubClient.repos.createDeploymentStatus({
+    state: 'success',
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    environment_url: environmentUrl,
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    deployment_id: (
+      deployment as OctokitResponse<ReposCreateDeploymentResponseData>
+    ).data.id
+  })
 }
 
 export async function run(inputs: Inputs): Promise<void> {
@@ -205,27 +198,28 @@ export async function run(inputs: Inputs): Promise<void> {
       }
     }
 
-    try {
-      const environment =
-        inputs.githubDeploymentEnvironment() ??
-        (productionDeploy
-          ? 'production'
-          : context.issue.number !== undefined
-          ? 'pull request'
-          : 'commit')
+    if (enableDeploymentStatus) {
+      try {
+        const environment =
+          inputs.githubDeploymentEnvironment() ??
+          (productionDeploy
+            ? 'production'
+            : context.issue.number !== undefined
+            ? 'pull request'
+            : 'commit')
 
-      const description = inputs.githubDeploymentDescription()
-      // Create GitHub Deployment
-      await createGitHubDeployment(
-        githubClient,
-        deployUrl,
-        environment,
-        description,
-        enableDeploymentStatus
-      )
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err)
+        const description = inputs.githubDeploymentDescription()
+        // Create GitHub Deployment
+        await createGitHubDeployment(
+          githubClient,
+          deployUrl,
+          environment,
+          description
+        )
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err)
+      }
     }
 
     if (inputs.enableCommitStatus()) {
