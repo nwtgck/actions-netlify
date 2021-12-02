@@ -59,6 +59,8 @@ async function createGitHubDeployment(
     required_contexts: []
   })
   if (enableDeploymentStatus) {
+    // eslint-disable-next-line no-console
+    console.warn(`Deployment status is enabled. Sending.`)
     await githubClient.repos.createDeploymentStatus({
       state: 'success',
       // eslint-disable-next-line @typescript-eslint/camelcase
@@ -70,6 +72,9 @@ async function createGitHubDeployment(
         deployment as OctokitResponse<ReposCreateDeploymentResponseData>
       ).data.id
     })
+  } else {
+    // eslint-disable-next-line no-console
+    console.warn(`Deployment status is disabled. Ignoring.`)
   }
 }
 
