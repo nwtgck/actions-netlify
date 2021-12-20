@@ -1,6 +1,6 @@
 {
   "name": "actions-netlify",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "private": true,
   "description": "GitHub Actions for Netlify",
   "main": "lib/main.js",
@@ -24,23 +24,23 @@
   "author": "Ryo Ota <nwtgck@nwtgck.org> (https://github.com/nwtgck)",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.7",
+    "@actions/core": "^1.6.0",
     "@actions/github": "^4.0.0",
-    "netlify": "^6.1.27"
+    "netlify": "^6.1.29"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.23",
-    "@types/node": "^12.20.12",
-    "@typescript-eslint/parser": "^4.22.1",
-    "@vercel/ncc": "^0.28.5",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^12.20.16",
+    "@typescript-eslint/parser": "^4.28.4",
+    "@vercel/ncc": "^0.33.1",
     "eslint": "^5.16.0",
     "eslint-plugin-github": "^2.0.0",
-    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-jest": "^24.4.0",
     "jest": "^26.6.3",
-    "jest-circus": "^26.6.3",
+    "jest-circus": "^27.4.5",
     "js-yaml": "^4.1.0",
-    "prettier": "^2.2.1",
+    "prettier": "^2.5.1",
     "ts-jest": "^26.5.6",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.5"
   }
 }

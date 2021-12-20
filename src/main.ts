@@ -64,8 +64,9 @@ async function createGitHubDeployment(
     owner: context.repo.owner,
     repo: context.repo.repo,
     // eslint-disable-next-line @typescript-eslint/camelcase
-    deployment_id: (deployment as OctokitResponse<ReposCreateDeploymentResponseData>)
-      .data.id
+    deployment_id: (
+      deployment as OctokitResponse<ReposCreateDeploymentResponseData>
+    ).data.id
   })
 }
 
@@ -88,7 +89,8 @@ export async function run(inputs: Inputs): Promise<void> {
     const productionBranch: string | undefined = inputs.productionBranch()
     const enablePullRequestComment: boolean = inputs.enablePullRequestComment()
     const enableCommitComment: boolean = inputs.enableCommitComment()
-    const overwritesPullRequestComment: boolean = inputs.overwritesPullRequestComment()
+    const overwritesPullRequestComment: boolean =
+      inputs.overwritesPullRequestComment()
     const netlifyConfigPath: string | undefined = inputs.netlifyConfigPath()
     const alias: string | undefined = inputs.alias()
 
