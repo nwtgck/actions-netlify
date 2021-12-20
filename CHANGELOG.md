@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.2.3] - 2021-12-20
+### Changed
+* Update dependencies
+
 ## [1.2.2] - 2021-05-08
 ### Fixed
 * Fix GitHub deployment description
@@ -179,7 +183,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.2.2...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.2.3...HEAD
+[1.2.3]: https://github.com/nwtgck/actions-netlify/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/nwtgck/actions-netlify/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/nwtgck/actions-netlify/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/nwtgck/actions-netlify/compare/v1.1.13...v1.2.0
