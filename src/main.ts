@@ -60,6 +60,8 @@ async function createGitHubDeployment(
   await githubClient.repos.createDeploymentStatus({
     state: 'success',
     // eslint-disable-next-line @typescript-eslint/camelcase
+    auto_inactive: false,
+    // eslint-disable-next-line @typescript-eslint/camelcase
     environment_url: environmentUrl,
     owner: context.repo.owner,
     repo: context.repo.repo,
