@@ -58,6 +58,9 @@ async function createGitHubDeployment(
     required_contexts: []
   })
   await githubClient.repos.createDeploymentStatus({
+    headers: {
+      accept: 'application/vnd.github.v3+json',
+    },
     state: 'success',
     // eslint-disable-next-line @typescript-eslint/camelcase
     auto_inactive: false,
