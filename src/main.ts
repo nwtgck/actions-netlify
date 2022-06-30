@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import { context, getOctokit } from '@actions/github'
 import type { GitHub } from '@actions/github/lib/utils'
 
-// import NetlifyAPI from 'netlify'
+import NetlifyAPI from 'netlify'
 import * as path from 'path'
 import { defaultInputs, Inputs } from './inputs'
 import * as crypto from 'crypto'
