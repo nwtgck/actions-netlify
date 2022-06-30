@@ -10,9 +10,9 @@
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
     "package": "ncc build lib/main.js",
-    "esbuild": "esbuild src/main.ts --bundle --outdir=dist --platform=node --external:vscode --external:@vscode/test-electron --external:jest",
+    "esbuild": "esbuild src/main.ts --bundle --outdir=dist --platform=node",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "yarn run build && yarn run format && yarn run lint && yarn run package && yarn test"
   },
   "repository": {
     "type": "git",
