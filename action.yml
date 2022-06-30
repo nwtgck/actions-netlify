@@ -1,6 +1,6 @@
-name: 'Netlify Actions'
-description: 'Netlify deploy from GitHub Actions'
-author: 'Ryo Ota'
+name: "Netlify Actions"
+description: "Netlify deploy from GitHub Actions"
+author: "Ryo Ota"
 inputs:
   publish-dir:
     description: Publish directory
@@ -15,14 +15,14 @@ inputs:
     description: GitHub token
     required: false
   production-branch:
-      description: Production branch
-      required: false
+    description: Production branch
+    required: false
   production-deploy:
-      description: Indicate wether to deploy production build
-      required: false
+    description: Indicate wether to deploy production build
+    required: false
   enable-pull-request-comment:
-      description: Enable pull request comment
-      required: false
+    description: Enable pull request comment
+    required: false
   enable-commit-comment:
     description: Enable commit comment
     required: false
@@ -51,5 +51,5 @@ outputs:
   deploy-url:
     description: Deploy URL
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node16"
+  main: "dist/index.js"

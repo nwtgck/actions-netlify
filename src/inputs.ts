@@ -61,7 +61,14 @@ export const defaultInputs: Inputs = {
     return core.getInput('netlify-config-path') || undefined
   },
   alias() {
-    return core.getInput('alias') || undefined
+    const alias = core.getInput('alias')
+    if (alias && alias.trim()) {
+      return encodeURIComponent(
+        alias.toLowerCase().replace(/[^a-z0-9 _-]+/gi, '-')
+      )
+    } else {
+      return undefined
+    }
   },
   githubDeploymentEnvironment(): string | undefined {
     return core.getInput('github-deployment-environment') || undefined
