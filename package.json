@@ -10,6 +10,7 @@
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
     "package": "ncc build lib/main.js",
+    "esbuild": "esbuild src/main.ts --bundle --outdir=dist --platform=node --external:vscode --external:@vscode/test-electron --external:jest",
     "test": "jest",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
@@ -29,6 +30,7 @@
     "netlify": "6.1.29"
   },
   "devDependencies": {
+    "esbuild": "0.14.48",
     "@types/jest": "28.1.3",
     "@types/node": "16.0.0",
     "@typescript-eslint/parser": "5.30.0",

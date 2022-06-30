@@ -52,4 +52,4 @@ outputs:
     description: Deploy URL
 runs:
   using: "node16"
-  main: "dist/index.js"
+  main: "dist/main.js"
