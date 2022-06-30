@@ -1,12 +1,11 @@
 import * as core from '@actions/core'
 import { context, getOctokit } from '@actions/github'
 import type { GitHub } from '@actions/github/lib/utils'
-import { GetResponseDataTypeFromEndpointMethod } from '@octokit/types'
-// import { OctokitResponse } from '@octokit/types/dist-types/OctokitResponse'
-import { NetlifyAPI } from 'netlify'
+
+import NetlifyAPI from 'netlify'
 import * as path from 'path'
 import { defaultInputs, Inputs } from './inputs'
-import * as crypto from 'node:crypto'
+import * as crypto from 'crypto'
 
 function getCommentIdentifier(siteId: string): string {
   const sha256SiteId: string = crypto
@@ -46,7 +45,7 @@ async function createGitHubDeployment(
   description: string | undefined
 ): Promise<void> {
   const deployRef = context.payload.pull_request?.head.sha ?? context.sha
-  const b = githubClient.rest.repos.createDeployment
+
 
   const deployment = await githubClient.rest.repos.createDeployment({
     // eslint-disable-next-line @typescript-eslint/camelcase

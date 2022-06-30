@@ -9,9 +9,9 @@
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "package": "ncc build ./lib/main.js --source-map --license licenses.txt",
+    "package": "ncc build lib/main.js",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run pack && npm test"
+    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
   "dependencies": {
     "@actions/core": "1.9.0",
     "@actions/github": "5.0.3",
-    "netlify": "11.0.2"
+    "netlify": "6.1.29"
   },
   "devDependencies": {
     "@types/jest": "28.1.3",
