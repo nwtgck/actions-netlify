@@ -235,7 +235,7 @@ export async function run(inputs: Inputs): Promise<void> {
         console.error(err)
       }
     }
-  } catch (error) {
+  } catch (error: any) {
     core.setFailed(error.message)
   }
 }
