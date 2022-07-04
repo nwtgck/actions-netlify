@@ -122,8 +122,19 @@ export async function run(inputs: Inputs): Promise<void> {
     console.log("deployMode:", deployMode)
     console.log("deployFolder:", deployFolder)
     console.log("message:", deployMessage)
-    const deployResult = sh.array`DEBUG=* yarn run deploy --dir=${deployFolder} --message=${deployMessage ?? "From NetlifyDeploy"} ${deployMode}`
+    {
+      const response = sh`yarn --version`
+      console.log(response)
 
+    }
+    {
+      const response = sh`yarn run netlify --help`
+      console.log(response)
+
+    }
+
+    const deployResult = sh.array`DEBUG=* yarn run deploy --dir=${deployFolder} --message=${deployMessage ?? "From NetlifyDeploy"} ${deployMode}`
+    console.log("DO I GET HERE? NO PROB")
     if (productionDeploy && alias !== undefined) {
       // eslint-disable-next-line no-console
       console.warn(
