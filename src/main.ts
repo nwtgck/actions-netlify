@@ -127,11 +127,7 @@ export async function run(inputs: Inputs): Promise<void> {
       console.log(response)
 
     }
-    {
-      const response = sh`yarn run netlify --help`
-      console.log(response)
 
-    }
     {
       const response = sh`npm install netlify-cli -g`
       console.log(response)
