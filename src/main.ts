@@ -140,6 +140,7 @@ export async function run(inputs: Inputs): Promise<void> {
     // This needs massive improvements.
     // It's index 5 when using NPX when 6 when using yarn run.
     // Better solutions https://github.com/jsmrcaga/action-netlify-deploy/blob/master/entrypoint.sh
+    // https://github.com/github-developer/example-setup-gh
     const deploy = deployResult[5].split(" ")?.[0] ? {production : deployResult[5].split(" ")[8] } : {staging: deployResult[4].split(" ")[3]}
 
     const deployURL = deploy.production ?? deploy.staging
