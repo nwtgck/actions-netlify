@@ -7786,7 +7786,6 @@ function run(inputs) {
       const alias = inputs.alias();
       const branchMatchesProduction = !!productionBranch && import_github.context.ref === `refs/heads/${productionBranch}`;
       const productionDeploy = branchMatchesProduction || inputs.productionDeploy();
-      const netlifyClient = new NetlifyAPI(netlifyAuthToken);
       const deployFolder = path.resolve(process.cwd(), dir);
       const functionsFolder = functionsDir && path.resolve(process.cwd(), functionsDir);
       const deployMode = productionDeploy ? "--prod" : `--alias=${alias}`;

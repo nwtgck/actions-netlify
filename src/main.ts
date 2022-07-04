@@ -101,8 +101,7 @@ export async function run(inputs: Inputs): Promise<void> {
       !!productionBranch && context.ref === `refs/heads/${productionBranch}`
     const productionDeploy: boolean =
       branchMatchesProduction || inputs.productionDeploy()
-    // Create Netlify API client
-    const netlifyClient = new NetlifyAPI(netlifyAuthToken)
+
     // Resolve publish directory
     const deployFolder = path.resolve(process.cwd(), dir)
     // Resolve functions directory
