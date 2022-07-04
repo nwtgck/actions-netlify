@@ -136,8 +136,12 @@ export async function run(inputs: Inputs): Promise<void> {
         `Only production deployment was conducted. The alias ${alias} was ignored.`
       )
     }
+
+
     console.info(deployResult)
-    const deploy = deployResult[6].split(" ")?.[0] ? {production : deployResult[6].split(" ")[8] } : {staging: deployResult[5].split(" ")[3]}
+    // This needs massive improvements.
+    // It's index 5 when using NPX when 6 when using yarn run.
+    const deploy = deployResult[5].split(" ")?.[0] ? {production : deployResult[5].split(" ")[8] } : {staging: deployResult[4].split(" ")[3]}
 
     const deployURL = deploy.production ?? deploy.staging
     // Create a message

@@ -114,3 +114,5 @@ lib/**/*
 # Intellij
 
 .idea/
+# Local Netlify folder
+.netlify
