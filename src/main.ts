@@ -2,7 +2,6 @@ import * as core from '@actions/core'
 import { context, getOctokit } from '@actions/github'
 import type { GitHub } from '@actions/github/lib/utils'
 import { sh } from "shellsync"
-import NetlifyAPI from 'netlify'
 import * as path from 'path'
 import { defaultInputs, Inputs } from './inputs'
 import * as crypto from 'crypto'
@@ -141,6 +140,7 @@ export async function run(inputs: Inputs): Promise<void> {
     console.info(deployResult)
     // This needs massive improvements.
     // It's index 5 when using NPX when 6 when using yarn run.
+    // Better solutions https://github.com/jsmrcaga/action-netlify-deploy/blob/master/entrypoint.sh
     const deploy = deployResult[5].split(" ")?.[0] ? {production : deployResult[5].split(" ")[8] } : {staging: deployResult[4].split(" ")[3]}
 
     const deployURL = deploy.production ?? deploy.staging

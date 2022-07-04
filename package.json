@@ -5,14 +5,13 @@
   "description": "GitHub Actions for Netlify",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --noEmit",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "package": "ncc build lib/main.js",
-    "esbuild": "esbuild src/main.ts --bundle --outdir=dist --platform=node",
+    "package": "esbuild src/main.ts --bundle --outdir=dist --platform=node",
     "test": "jest",
-    "all": "yarn run build && yarn run format && yarn run lint && yarn run esbuild && yarn test"
+    "all": "yarn run build && yarn run test && yarn run format && yarn run lint && yarn run package"
   },
   "repository": {
     "type": "git",
@@ -27,7 +26,6 @@
   "dependencies": {
     "@actions/core": "1.9.0",
     "@actions/github": "5.0.3",
-    "netlify": "6.1.29",
     "shellsync": "0.2.2",
     "netlify-cli": "10.7.1"
   },
