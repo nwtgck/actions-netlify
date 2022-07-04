@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import { context, getOctokit } from '@actions/github'
 import type { GitHub } from '@actions/github/lib/utils'
-
+import { sh } from "shellsync"
 import NetlifyAPI from 'netlify'
 import * as path from 'path'
 import { defaultInputs, Inputs } from './inputs'
@@ -110,31 +110,35 @@ export async function run(inputs: Inputs): Promise<void> {
     const functionsFolder =
       functionsDir && path.resolve(process.cwd(), functionsDir)
     // Deploy to Netlify
-    const deploy = await netlifyClient.deploy(siteId, deployFolder, {
-      draft: !productionDeploy,
-      message: deployMessage,
-      configPath: netlifyConfigPath,
-      ...(productionDeploy ? {} : { branch: alias }),
-      fnDir: functionsFolder
-    })
+    // const deploy = await netlifyClient.deploy(siteId, deployFolder, {
+    //   draft: !productionDeploy,
+    //   message: deployMessage,
+    //   configPath: netlifyConfigPath,
+    //   ...(productionDeploy ? {} : { branch: alias }),
+    //   fnDir: functionsFolder
+    // })
+    const deployMode = productionDeploy ? "--prod" : `--alias=${alias}`
+    const deployResult = sh.array`yarn run deploy --dir=${deployFolder} ${deployMode}`
+
     if (productionDeploy && alias !== undefined) {
       // eslint-disable-next-line no-console
       console.warn(
         `Only production deployment was conducted. The alias ${alias} was ignored.`
       )
     }
+    console.info(deployResult)
+    const deploy = deployResult[6].split(" ")?.[0] ? {production : deployResult[6].split(" ")[8] } : {staging: deployResult[5].split(" ")[3]}
+
+    const deployURL = deploy.production ?? deploy.staging
     // Create a message
-    const message = productionDeploy
-      ? `🎉 Published on ${deploy.deploy.ssl_url} as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
-      : `🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
+    const message = "production" in deploy
+      ? `🎉 Production deployed on ${deploy.production}`
+      : `🚀 Staging Deployed on ${deploy.staging}`
     // Print the URL
     process.stdout.write(`${message}\n`)
 
-    // Set the deploy URL to outputs for GitHub Actions
-    const deployUrl = productionDeploy
-      ? deploy.deploy.ssl_url
-      : deploy.deploy.deploy_ssl_url
-    core.setOutput('deploy-url', deployUrl)
+
+    core.setOutput('deploy-url', deployURL)
 
     // Get GitHub token
     const githubToken = inputs.githubToken()
@@ -210,7 +214,7 @@ export async function run(inputs: Inputs): Promise<void> {
       // Create GitHub Deployment
       await createGitHubDeployment(
         githubClient,
-        deployUrl,
+        deployURL,
         environment,
         description
       )
@@ -232,7 +236,7 @@ export async function run(inputs: Inputs): Promise<void> {
           state: 'success',
           sha,
           // eslint-disable-next-line @typescript-eslint/camelcase
-          target_url: deployUrl
+          target_url: deployURL
         })
       } catch (err) {
         // eslint-disable-next-line no-console
