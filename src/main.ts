@@ -55,10 +55,12 @@ async function createGitHubDeployment(
     environment,
     description,
     // eslint-disable-next-line @typescript-eslint/camelcase
-    required_contexts: []
+    required_contexts: [],
   })
   await githubClient.repos.createDeploymentStatus({
     state: 'success',
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    auto_inactive: false,
     // eslint-disable-next-line @typescript-eslint/camelcase
     environment_url: environmentUrl,
     owner: context.repo.owner,
@@ -66,7 +68,11 @@ async function createGitHubDeployment(
     // eslint-disable-next-line @typescript-eslint/camelcase
     deployment_id: (
       deployment as OctokitResponse<ReposCreateDeploymentResponseData>
-    ).data.id
+    ).data.id,
+    mediaType: {
+      // required for auto_inactive flag
+      previews: ['ant-man', 'flash'],
+    }
   })
 }
 
@@ -140,7 +146,7 @@ export async function run(inputs: Inputs): Promise<void> {
     const markdownComment = `${getCommentIdentifier(siteId)}\n${message}`
 
     // Create GitHub client
-    const githubClient = getOctokit(githubToken)
+    const githubClient = getOctokit(githubToken, {log: console})
 
     if (enableCommitComment) {
       const commitCommentParams = {
