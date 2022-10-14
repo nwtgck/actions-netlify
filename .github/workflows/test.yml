@@ -3,6 +3,10 @@ on:
   push:
   pull_request:
 
+permissions:
+  statuses: write
+  deployments: write
+
 jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
