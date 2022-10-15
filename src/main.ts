@@ -1,8 +1,6 @@
 import * as core from '@actions/core'
 import {context, getOctokit} from '@actions/github'
 import type {GitHub} from '@actions/github/lib/utils'
-import {ReposCreateDeploymentResponseData} from '@octokit/types/dist-types/generated/Endpoints'
-import {OctokitResponse} from '@octokit/types/dist-types/OctokitResponse'
 import NetlifyAPI from 'netlify'
 import * as path from 'path'
 import {defaultInputs, Inputs} from './inputs'
@@ -20,7 +18,7 @@ async function findIssueComment(
   githubClient: InstanceType<typeof GitHub>,
   siteId: string
 ): Promise<number | undefined> {
-  const listCommentsRes = await githubClient.issues.listComments({
+  const listCommentsRes = await githubClient.rest.issues.listComments({
     owner: context.issue.owner,
     repo: context.issue.repo,
     issue_number: context.issue.number
@@ -31,7 +29,8 @@ async function findIssueComment(
 
   for (const comment of comments) {
     // If comment contains the comment identifier
-    if (comment.body.includes(commentIdentifier)) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (comment.body!.includes(commentIdentifier)) {
       return comment.id
     }
   }
@@ -45,7 +44,7 @@ async function createGitHubDeployment(
   description: string | undefined
 ): Promise<void> {
   const deployRef = context.payload.pull_request?.head.sha ?? context.sha
-  const deployment = await githubClient.repos.createDeployment({
+  const deployment = await githubClient.rest.repos.createDeployment({
     auto_merge: false,
     owner: context.repo.owner,
     repo: context.repo.repo,
@@ -54,14 +53,12 @@ async function createGitHubDeployment(
     description,
     required_contexts: []
   })
-  await githubClient.repos.createDeploymentStatus({
+  await githubClient.rest.repos.createDeploymentStatus({
     state: 'success',
     environment_url: environmentUrl,
     owner: context.repo.owner,
     repo: context.repo.repo,
-    deployment_id: (
-      deployment as OctokitResponse<ReposCreateDeploymentResponseData>
-    ).data.id
+    deployment_id: (deployment.data as {id: number}).id
   })
 }
 
@@ -148,7 +145,7 @@ export async function run(inputs: Inputs): Promise<void> {
       // NOTE: try-catch is experimentally used because commit message may not be done in some conditions.
       try {
         // Comment to the commit
-        await githubClient.repos.createCommitComment(commitCommentParams)
+        await githubClient.rest.repos.createCommitComment(commitCommentParams)
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err, JSON.stringify(commitCommentParams, null, 2))
@@ -167,7 +164,7 @@ export async function run(inputs: Inputs): Promise<void> {
         // NOTE: if not overwrite, commentId is always undefined
         if (commentId !== undefined) {
           // Update comment of the deploy URL
-          await githubClient.issues.updateComment({
+          await githubClient.rest.issues.updateComment({
             owner: context.issue.owner,
             repo: context.issue.repo,
             comment_id: commentId,
@@ -175,7 +172,7 @@ export async function run(inputs: Inputs): Promise<void> {
           })
         } else {
           // Comment the deploy URL
-          await githubClient.issues.createComment({
+          await githubClient.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
@@ -212,7 +209,7 @@ export async function run(inputs: Inputs): Promise<void> {
         // When "pull_request", context.payload.pull_request?.head.sha is expected SHA.
         // (base: https://github.community/t/github-sha-isnt-the-value-expected/17903/2)
         const sha = context.payload.pull_request?.head.sha ?? context.sha
-        await githubClient.repos.createCommitStatus({
+        await githubClient.rest.repos.createCommitStatus({
           owner: context.repo.owner,
           repo: context.repo.repo,
           context: 'Netlify',
