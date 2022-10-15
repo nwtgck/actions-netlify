@@ -23,7 +23,6 @@ async function findIssueComment(
   const listCommentsRes = await githubClient.issues.listComments({
     owner: context.issue.owner,
     repo: context.issue.repo,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     issue_number: context.issue.number
   })
 
@@ -47,23 +46,19 @@ async function createGitHubDeployment(
 ): Promise<void> {
   const deployRef = context.payload.pull_request?.head.sha ?? context.sha
   const deployment = await githubClient.repos.createDeployment({
-    // eslint-disable-next-line @typescript-eslint/camelcase
     auto_merge: false,
     owner: context.repo.owner,
     repo: context.repo.repo,
     ref: deployRef,
     environment,
     description,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     required_contexts: []
   })
   await githubClient.repos.createDeploymentStatus({
     state: 'success',
-    // eslint-disable-next-line @typescript-eslint/camelcase
     environment_url: environmentUrl,
     owner: context.repo.owner,
     repo: context.repo.repo,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     deployment_id: (
       deployment as OctokitResponse<ReposCreateDeploymentResponseData>
     ).data.id
@@ -146,7 +141,6 @@ export async function run(inputs: Inputs): Promise<void> {
       const commitCommentParams = {
         owner: context.repo.owner,
         repo: context.repo.repo,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         commit_sha: context.sha,
         body: markdownComment
       }
@@ -176,14 +170,12 @@ export async function run(inputs: Inputs): Promise<void> {
           await githubClient.issues.updateComment({
             owner: context.issue.owner,
             repo: context.issue.repo,
-            // eslint-disable-next-line @typescript-eslint/camelcase
             comment_id: commentId,
             body: markdownComment
           })
         } else {
           // Comment the deploy URL
           await githubClient.issues.createComment({
-            // eslint-disable-next-line @typescript-eslint/camelcase
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
@@ -227,7 +219,6 @@ export async function run(inputs: Inputs): Promise<void> {
           description: 'Netlify deployment',
           state: 'success',
           sha,
-          // eslint-disable-next-line @typescript-eslint/camelcase
           target_url: deployUrl
         })
       } catch (err) {
