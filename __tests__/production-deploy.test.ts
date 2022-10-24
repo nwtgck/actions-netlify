@@ -5,6 +5,7 @@ import {context} from '@actions/github'
 import {run} from '../src/main'
 
 const mockDeploy = jest.fn()
+const mockCreateComment = jest.fn()
 
 jest.mock('netlify', () => {
   return jest.fn().mockImplementation(() => {
@@ -12,7 +13,30 @@ jest.mock('netlify', () => {
   })
 })
 jest.mock('../src/inputs')
-jest.mock('@actions/github')
+jest.mock('@actions/github', () => {
+  const {context} = jest.requireActual('@actions/github')
+
+  return {
+    context: Object.assign({}, context, {
+      issue: {
+        number: 42
+      },
+      repo: {
+        owner: 'foo bar',
+        repo: 'foo'
+      }
+    }),
+    getOctokit: () => ({
+      issues: {
+        createComment: mockCreateComment
+      },
+      repos: {
+        createDeployment: jest.fn().mockReturnValue({data: {id: 1}}),
+        createDeploymentStatus: jest.fn()
+      }
+    })
+  }
+})
 
 mockDeploy.mockResolvedValue({deploy: {}})
 mocked(defaultInputs.githubToken).mockReturnValue('') // NOTE: empty string means the input is not specified
@@ -36,6 +60,37 @@ describe('Draft deploy', () => {
       {
         draft: true
       }
+    )
+  })
+
+  test('PR comment should contain project name', async () => {
+    mocked(defaultInputs.enablePullRequestComment).mockReturnValue(true)
+    mocked(defaultInputs.githubToken).mockReturnValue('dummy-github-token')
+    mocked(defaultInputs.projectName).mockReturnValue('My Project')
+
+    await run(defaultInputs)
+
+    expect(mockCreateComment).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: expect.stringContaining(`Deployed My Project`)
+      })
+    )
+  })
+
+  test('PR comment should not contain "undefined" if project name is empty', async () => {
+    mocked(defaultInputs.enablePullRequestComment).mockReturnValue(true)
+    mocked(defaultInputs.githubToken).mockReturnValue('dummy-github-token')
+    mocked(defaultInputs.projectName).mockReturnValue(undefined)
+    mockDeploy.mockResolvedValue({
+      deploy: {deploy_ssl_url: 'https://foobar.com/'}
+    })
+
+    await run(defaultInputs)
+
+    expect(mockCreateComment).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: expect.not.stringContaining(`undefined`)
+      })
     )
   })
 

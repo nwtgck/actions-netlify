@@ -7,9 +7,11 @@ export interface Inputs {
   deployMessage(): string | undefined
   productionBranch(): string | undefined
   productionDeploy(): boolean
+  projectName(): string | undefined
   enablePullRequestComment(): boolean
   enableCommitComment(): boolean
   enableCommitStatus(): boolean
+  enableDeploymentStatus(): boolean
   githubToken(): string
   overwritesPullRequestComment(): boolean
   netlifyConfigPath(): string | undefined
@@ -36,6 +38,9 @@ export const defaultInputs: Inputs = {
     // Default: false
     return core.getInput('production-deploy') === 'true'
   },
+  projectName() {
+    return core.getInput('project-name') || undefined
+  },
   enablePullRequestComment() {
     // Default: true
     return (core.getInput('enable-pull-request-comment') || 'true') === 'true'
@@ -43,6 +48,10 @@ export const defaultInputs: Inputs = {
   enableCommitComment() {
     // Default: true
     return (core.getInput('enable-commit-comment') || 'true') === 'true'
+  },
+  enableDeploymentStatus() {
+    // Default: true
+    return (core.getInput('enable-deployment-status') || 'true') === 'true'
   },
   enableCommitStatus() {
     // Default: true

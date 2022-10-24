@@ -54,6 +54,7 @@ async function createGitHubDeployment(
     description,
     required_contexts: []
   })
+
   await githubClient.repos.createDeploymentStatus({
     state: 'success',
     environment_url: environmentUrl,
@@ -81,9 +82,11 @@ export async function run(inputs: Inputs): Promise<void> {
     const dir = inputs.publishDir()
     const functionsDir: string | undefined = inputs.functionsDir()
     const deployMessage: string | undefined = inputs.deployMessage()
+    const projectName: string | undefined = inputs.projectName()
     const productionBranch: string | undefined = inputs.productionBranch()
     const enablePullRequestComment: boolean = inputs.enablePullRequestComment()
     const enableCommitComment: boolean = inputs.enableCommitComment()
+    const enableDeploymentStatus: boolean = inputs.enableDeploymentStatus()
     const overwritesPullRequestComment: boolean =
       inputs.overwritesPullRequestComment()
     const netlifyConfigPath: string | undefined = inputs.netlifyConfigPath()
@@ -116,8 +119,10 @@ export async function run(inputs: Inputs): Promise<void> {
     }
     // Create a message
     const message = productionDeploy
-      ? `🎉 Published on ${deploy.deploy.ssl_url} as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
-      : `🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
+      ? `🎉 Published ${projectName || ''} on ${
+          deploy.deploy.ssl_url
+        } as production\n🚀 Deployed on ${deploy.deploy.deploy_ssl_url}`
+      : `🚀 Deployed ${projectName || ''} to ${deploy.deploy.deploy_ssl_url}`
     // Print the URL
     process.stdout.write(`${message}\n`)
 
@@ -185,26 +190,28 @@ export async function run(inputs: Inputs): Promise<void> {
       }
     }
 
-    try {
-      const environment =
-        inputs.githubDeploymentEnvironment() ??
-        (productionDeploy
-          ? 'production'
-          : context.issue.number !== undefined
-          ? 'pull request'
-          : 'commit')
+    if (enableDeploymentStatus) {
+      try {
+        const environment =
+          inputs.githubDeploymentEnvironment() ??
+          (productionDeploy
+            ? 'production'
+            : context.issue.number !== undefined
+            ? 'pull request'
+            : 'commit')
 
-      const description = inputs.githubDeploymentDescription()
-      // Create GitHub Deployment
-      await createGitHubDeployment(
-        githubClient,
-        deployUrl,
-        environment,
-        description
-      )
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err)
+        const description = inputs.githubDeploymentDescription()
+        // Create GitHub Deployment
+        await createGitHubDeployment(
+          githubClient,
+          deployUrl,
+          environment,
+          description
+        )
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err)
+      }
     }
 
     if (inputs.enableCommitStatus()) {

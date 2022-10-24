@@ -20,11 +20,17 @@ inputs:
   production-deploy:
       description: Indicate wether to deploy production build
       required: false
+  project-name:
+      description: Name of project
+      required: false
   enable-pull-request-comment:
       description: Enable pull request comment
       required: false
   enable-commit-comment:
     description: Enable commit comment
+    required: false
+  enable-deployment-status:
+    description: Enable GitHub deployment status
     required: false
   enable-commit-status:
     description: Enable GitHub commit status
