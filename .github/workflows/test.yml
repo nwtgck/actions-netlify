@@ -6,6 +6,7 @@ on:
 permissions:
   statuses: write
   deployments: write
+  pull-requests: write
 
 jobs:
   build: # make sure build/ci work properly
