@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [2.0.0] - 2022-12-08
+### Changed
+* Update dependencies
+* Updates the default runtime to node16
+
 ## [1.2.4] - 2022-10-14
 ### Changed
 * Update dependencies
@@ -187,7 +192,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v1.2.4...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/nwtgck/actions-netlify/compare/v1.2.4...v2.0.0
 [1.2.4]: https://github.com/nwtgck/actions-netlify/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/nwtgck/actions-netlify/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/nwtgck/actions-netlify/compare/v1.2.1...v1.2.2
