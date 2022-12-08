@@ -1,5 +1,5 @@
 import * as path from 'path'
-import {mocked} from 'ts-jest/utils'
+import {mocked} from 'jest-mock'
 import {defaultInputs} from '../src/inputs'
 import {context} from '@actions/github'
 import {run} from '../src/main'
