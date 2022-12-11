@@ -28,7 +28,7 @@ jobs:
       # ( Build to ./dist or other directory... )
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.2
+        uses: sergeylukin/actions-netlify@add-project-name-to-pr-comment
         with:
           publish-dir: './dist'
           production-branch: master
