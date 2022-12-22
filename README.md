@@ -64,6 +64,7 @@ jobs:
 - `alias` Specifies the prefix for the deployment URL, must not have uppercase or special characters (default: Netlify build ID)
   - `alias: ${{ github.head_ref }}` replicates the [branch deploy prefix](https://docs.netlify.com/site-deploys/overview/#definitions)
   - `alias: deploy-preview-${{ github.event.number }}` replicates the [deploy preview prefix](https://docs.netlify.com/site-deploys/overview/#definitions)
+- `github-deployment-enable` Whether or not to deploy to Github (default: true)
 - `github-deployment-environment` Environment name of GitHub Deployments
 - `github-deployment-description` Description of the GitHub Deployment
 - `fails-without-credentials` Fails if no credentials provided (default: false)

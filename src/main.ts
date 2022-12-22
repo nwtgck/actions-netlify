@@ -182,26 +182,29 @@ export async function run(inputs: Inputs): Promise<void> {
       }
     }
 
-    try {
-      const environment =
-        inputs.githubDeploymentEnvironment() ??
-        (productionDeploy
-          ? 'production'
-          : context.issue.number !== undefined
-          ? 'pull request'
-          : 'commit')
-
-      const description = inputs.githubDeploymentDescription()
-      // Create GitHub Deployment
-      await createGitHubDeployment(
-        githubClient,
-        deployUrl,
-        environment,
-        description
-      )
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err)
+    // create GitHub Deployment if enabled
+    if (inputs.githubDeploymentEnable()) {
+      try {
+        const environment =
+          inputs.githubDeploymentEnvironment() ??
+          (productionDeploy
+            ? 'production'
+            : context.issue.number !== undefined
+            ? 'pull request'
+            : 'commit')
+  
+        const description = inputs.githubDeploymentDescription()
+        // Create GitHub Deployment
+        await createGitHubDeployment(
+          githubClient,
+          deployUrl,
+          environment,
+          description
+        )
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err)
+      }
     }
 
     if (inputs.enableCommitStatus()) {
