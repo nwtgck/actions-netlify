@@ -21,9 +21,9 @@ on:
   pull_request:
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # ( Build to ./dist or other directory... )
 
