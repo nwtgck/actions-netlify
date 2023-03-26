@@ -184,20 +184,20 @@ describe('defaultInputs', () => {
 
 describe('githubDeploymentEnable', () => {
   test('it should be default value (true) when not specified', () => {
-    const b: boolean = defaultInputs.githubDeploymentEnable()
+    const b: boolean = defaultInputs.enableGithubDeployment()
     expect(b).toBe(true)
   })
 
   test('it should be true when "true" specified', () => {
-    withInput('github-deployment-enable', 'true', () => {
-      const b: boolean = defaultInputs.githubDeploymentEnable()
+    withInput('enable-github-deployment', 'true', () => {
+      const b: boolean = defaultInputs.enableGithubDeployment()
       expect(b).toBe(true)
     })
   })
 
   test('it should be true when "false" specified', () => {
-    withInput('github-deployment-enable', 'false', () => {
-      const b: boolean = defaultInputs.githubDeploymentEnable()
+    withInput('enable-github-deployment', 'false', () => {
+      const b: boolean = defaultInputs.enableGithubDeployment()
       expect(b).toBe(false)
     })
   })

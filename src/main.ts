@@ -182,8 +182,7 @@ export async function run(inputs: Inputs): Promise<void> {
       }
     }
 
-    // create GitHub Deployment if enabled
-    if (inputs.githubDeploymentEnable()) {
+    if (inputs.enableGithubDeployment()) {
       try {
         const environment =
           inputs.githubDeploymentEnvironment() ??
@@ -192,7 +191,7 @@ export async function run(inputs: Inputs): Promise<void> {
             : context.issue.number !== undefined
             ? 'pull request'
             : 'commit')
-  
+
         const description = inputs.githubDeploymentDescription()
         // Create GitHub Deployment
         await createGitHubDeployment(
