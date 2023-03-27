@@ -38,6 +38,9 @@ inputs:
   alias:
     description: Specifies the prefix for the deployment URL
     required: false
+  enable-github-deployment:
+    description: Whether or not to deploy to GitHub
+    required: false
   github-deployment-environment:
     description: Environment name of GitHub Deployments
     required: false
