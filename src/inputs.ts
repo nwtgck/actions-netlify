@@ -15,6 +15,7 @@ export interface Inputs {
   netlifyConfigPath(): string | undefined
   alias(): string | undefined
   enableGithubDeployment(): boolean
+  githubDeploymentAutoInactive(): boolean
   githubDeploymentEnvironment(): string | undefined
   githubDeploymentDescription(): string | undefined
   failsWithoutCredentials(): boolean
@@ -67,6 +68,10 @@ export const defaultInputs: Inputs = {
   enableGithubDeployment() {
     // Default: true
     return (core.getInput('enable-github-deployment') || 'true') === 'true'
+  },
+  githubDeploymentAutoInactive() {
+    // Default: true
+    return (core.getInput('github-deployment-auto-inactive') || 'true') === 'true'
   },
   githubDeploymentEnvironment(): string | undefined {
     return core.getInput('github-deployment-environment') || undefined
