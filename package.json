@@ -26,7 +26,7 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
-    "netlify": "^6.1.29"
+    "netlify": "^13.1.5"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
