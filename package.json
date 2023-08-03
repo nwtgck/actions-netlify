@@ -39,7 +39,7 @@
     "jest-circus": "^29.5.0",
     "jest-mock": "^29.5.0",
     "js-yaml": "^4.1.0",
-    "prettier": "^2.8.7",
+    "prettier": "^3.0.1",
     "ts-jest": "^29.0.5",
     "typescript": "^5.0.4"
   }
