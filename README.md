@@ -21,14 +21,14 @@ on:
   pull_request:
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # ( Build to ./dist or other directory... )
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.2
+        uses: nwtgck/actions-netlify@v2.0
         with:
           publish-dir: './dist'
           production-branch: master
@@ -64,6 +64,7 @@ jobs:
 - `alias` Specifies the prefix for the deployment URL, must not have uppercase or special characters (default: Netlify build ID)
   - `alias: ${{ github.head_ref }}` replicates the [branch deploy prefix](https://docs.netlify.com/site-deploys/overview/#definitions)
   - `alias: deploy-preview-${{ github.event.number }}` replicates the [deploy preview prefix](https://docs.netlify.com/site-deploys/overview/#definitions)
+- `enable-github-deployment` Whether or not to deploy to GitHub (default: true)
 - `github-deployment-environment` Environment name of GitHub Deployments
 - `github-deployment-description` Description of the GitHub Deployment
 - `fails-without-credentials` Fails if no credentials provided (default: false)

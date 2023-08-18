@@ -5,16 +5,16 @@ on:
 
 jobs:
   comment-run:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         # 0 indicates all history
         fetch-depth: 0
     - uses: actions/setup-node@v3
       with:
-        node-version: 12
-    - uses: nwtgck/actions-comment-run@v1.1
+        node-version: 16
+    - uses: nwtgck/actions-comment-run@v2.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         allowed-associations: '["OWNER"]'

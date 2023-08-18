@@ -70,7 +70,7 @@ describe('Draft deploy', () => {
     )
   })
 
-  test('deploy should have draft true when production-branch doesnt match context ref', async () => {
+  test('deploy should have draft true when production-branch does not match context ref', async () => {
     mocked(defaultInputs.productionDeploy).mockReturnValue(false)
     mocked(defaultInputs.productionBranch).mockReturnValue('master')
 

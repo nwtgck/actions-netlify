@@ -18,7 +18,7 @@ inputs:
       description: Production branch
       required: false
   production-deploy:
-      description: Indicate wether to deploy production build
+      description: Indicate whether to deploy production build
       required: false
   enable-pull-request-comment:
       description: Enable pull request comment
@@ -37,6 +37,9 @@ inputs:
     required: false
   alias:
     description: Specifies the prefix for the deployment URL
+    required: false
+  enable-github-deployment:
+    description: Whether or not to deploy to GitHub
     required: false
   github-deployment-environment:
     description: Environment name of GitHub Deployments

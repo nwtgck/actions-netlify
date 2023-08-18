@@ -1,9 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
+
+## [2.1.0] - 2023-08-18
+### Changed
+* Update dependencies
+
+### Added
+* Add "enable-github-deployment" input [#901](https://github.com/nwtgck/actions-netlify/pull/901) by [@a-tokyo](https://github.com/a-tokyo)
 
 ## [2.0.0] - 2022-12-08
 ### Changed
@@ -192,7 +199,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 * Deploy to Netlify
 * Comment on GitHub PR
 
-[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/nwtgck/actions-netlify/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/nwtgck/actions-netlify/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/nwtgck/actions-netlify/compare/v1.2.4...v2.0.0
 [1.2.4]: https://github.com/nwtgck/actions-netlify/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/nwtgck/actions-netlify/compare/v1.2.2...v1.2.3

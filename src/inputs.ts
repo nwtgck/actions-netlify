@@ -14,6 +14,7 @@ export interface Inputs {
   overwritesPullRequestComment(): boolean
   netlifyConfigPath(): string | undefined
   alias(): string | undefined
+  enableGithubDeployment(): boolean
   githubDeploymentEnvironment(): string | undefined
   githubDeploymentDescription(): string | undefined
   failsWithoutCredentials(): boolean
@@ -62,6 +63,10 @@ export const defaultInputs: Inputs = {
   },
   alias() {
     return core.getInput('alias') || undefined
+  },
+  enableGithubDeployment() {
+    // Default: true
+    return (core.getInput('enable-github-deployment') || 'true') === 'true'
   },
   githubDeploymentEnvironment(): string | undefined {
     return core.getInput('github-deployment-environment') || undefined
