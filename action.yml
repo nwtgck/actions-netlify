@@ -54,5 +54,5 @@ outputs:
   deploy-url:
     description: Deploy URL
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'

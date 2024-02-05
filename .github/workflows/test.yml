@@ -12,9 +12,9 @@ jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - uses: actions/checkout@v4
       - run: npm ci
       - run: npm run all

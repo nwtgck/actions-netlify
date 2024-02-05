@@ -11,9 +11,9 @@ jobs:
       with:
         # 0 indicates all history
         fetch-depth: 0
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: 16
+        node-version: 20
     - uses: nwtgck/actions-comment-run@v2.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
