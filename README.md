@@ -81,3 +81,175 @@ All paths (eg, `publish-dir`, `netlify-config-path`, `functions-dir`) are relati
 npm ci
 npm run all
 ```
+
+## Troubleshooting
+
+### Inconsistent deploy previews (community contributions fail)
+
+`pull_request` events only allow secrets in workflows for collaborators. This means PRs from the community are not trusted when running their contribution to your project via Github Actions, as it would allow stealing secrets such as your Netlify deployment token.
+
+The [official advice from Github](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/) is to perform a build of your project and anything else that does not need secrets via your `pull_request` event, and then transfer it over to a secure workflow via `workflow_run` (always runs from your main branch). You only need to do this if you want to support deploy previews for PRs from non-collaborators, it is otherwise just an inconvenience.
+
+#### Example config
+
+**Workflow Stage 1:** `.github/workflows/docs-preview-prepare.yml`:
+
+```yml
+name: 'Documentation (PR)'
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+
+# `pull_request` workflow is unreliable alone: Non-collaborator contributions lack access to secrets for security reasons.
+# A separate workflow handles the deploy after the potentially untrusted code is first run in this workflow.
+# See: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+jobs:
+  build-preview:
+    name: 'Prepare Preview'
+    runs-on: ubuntu-20.04
+    env:
+      BUILD_DIR: docs/site
+      NETLIFY_PREFIX: pullrequest-${{ github.event.pull_request.number }}
+      NETLIFY_SITE_NAME: doc-previews
+    steps:
+      - uses: actions/checkout@v2
+
+      # Your build step logic goes here, this one builds some docs
+      - name: 'Build with mkdocs-material via Docker'
+        working-directory: docs
+        run: |
+          # Adjust `mkdocs.yml` for preview build
+          sed -i "s|^site_url:.*|site_url: 'https://${NETLIFY_PREFIX}--${NETLIFY_SITE_NAME}.netlify.app/'|" mkdocs.yml
+
+          docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material:7.1.3 build --strict
+
+      # ============================== #
+      # Volley over to secure workflow #
+      # ============================== #
+
+      # Minimize risk of upload failure by bundling files to a single compressed archive (tar + zstd).
+      # Bundles build dir and env file into a compressed archive, nested file paths will be preserved.
+      - name: 'Prepare artifact for transfer'
+        run: |
+          # Save ENV needed for actions in secure workflow
+          echo "PR_HEADSHA=${{ github.event.pull_request.head.sha }}" >> pr.env
+          echo "PR_NUMBER=${{ github.event.pull_request.number }}"    >> pr.env
+          echo "PR_TITLE=${{ github.event.pull_request.title }}"      >> pr.env
+          echo "NETLIFY_PREFIX=${{ env.NETLIFY_PREFIX }}"             >> pr.env
+          echo "BUILD_DIR=${{ env.BUILD_DIR }}"                       >> pr.env
+
+          tar --zstd -cf artifact.tar.zst pr.env ${{ env.BUILD_DIR }}
+
+      - name: 'Upload artifact for workflow transfer'
+        uses: actions/upload-artifact@v2
+        with:
+          name: preview-build
+          path: artifact.tar.zst
+          retention-days: 1
+```
+
+**Workflow Stage 2:** `.github/workflows/docs-preview-deploy.yml`:
+
+```yml
+name: 'Documentation (run)'
+
+on:
+  workflow_run:
+    workflows: ['Documentation (PR)']
+    types:
+      - completed
+
+# This workflow runs off master branch and has access to secrets as expected
+jobs:
+  preview:
+    name: 'Deploy Preview'
+    runs-on: ubuntu-20.04
+    if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
+    steps:
+
+      # ======================== #
+      # Restore workflow context #
+      # ======================== #
+
+      # Official Github Action for Artifact downloads lacks multi-workflow support.
+      # This is a popular workaround vs copy/paste Github blog scripts.
+      - name: 'Download build artifact'
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          run_id: ${{ github.event.workflow_run.id }}
+          workflow: docs-preview-prepare.yml
+          name: preview-build
+
+      - name: 'Extract build artifact'
+        run: tar -xf artifact.tar.zst
+
+      - name: 'Restore preserved ENV'
+        run: cat pr.env >> "${GITHUB_ENV}"
+
+      # ==================== #
+      # Deploy preview build #
+      # ==================== #
+
+      - name: 'Send preview build to Netlify'
+        id: preview
+        uses: nwtgck/actions-netlify@v1.2
+        timeout-minutes: 1
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Uses the PR number for uniqueness:
+          alias: ${{ env.NETLIFY_PREFIX }}
+          # Only publish the contents of the build output:
+          publish-dir: ${{ env.BUILD_DIR }}
+          # Custom message for the deploy log on Netlify:
+          deploy-message: '${{ env.PR_TITLE }} (PR #${{ env.PR_NUMBER }} @ commit: ${{ env.PR_HEADSHA }})'
+          
+          # These and other features aren't reliable as the action accidentally references the main branch commit instead.
+          enable-commit-comment: false
+          enable-commit-status: false
+          enable-pull-request-comment: false
+          # Note deployment environment status and log entries will likewise reference the wrong commit. Presently this cannot be disabled.
+```
+
+#### Restoring PR comment updates
+
+This action does not presently support the ability to provide the PR number as an input. Until then you can use [this action](https://github.com/marocchino/sticky-pull-request-comment) which does:
+
+```yml
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          number: ${{ env.PR_NUMBER }}
+          header: preview-comment
+          message: |
+            [Documentation preview for this PR](${{ steps.preview.outputs.deploy-url }}) is ready! :tada:
+
+            Built with commit: ${{ env.PR_HEADSHA }}
+```
+
+**Note:** This action relies on the `nwtgck/actions-netlify` step having an _id_ (`preview`) assigned. It also uses a `header: preview-comment` to set a _comment id_. If you need multiple comments, repeat the action with different `header` values.
+
+#### Restore Check Suite status (`enable-commit-status`)
+
+This is the feature that adds a ✔️ or ❌ status to your commit, with the latest commit in a pull request being presented above the comment text field.
+
+```yml
+      - name: 'Set Commit Status'
+        uses: myrotvorets/set-commit-status-action@1.0.2
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status == 'success' && 'success' || 'failure' }}
+          sha: ${{ github.event.workflow_run.head_sha }}
+          context: 'Deploy Preview (pull_request => workflow_run)'
+```
+
+If you want to match the original commit status message, use `context: Netlify` and the additional field `description: Netlify deployment`.
+
+**Note:** The `sha` field is using the `workflow_run` event data for the commit SHA. `PR_HEADSHA` isn't actually required as it's not `pull_request` specific, it references the same `pull_request.head.sha` value.
+
+**Note:** While you can duplicate this action step earlier for a "pending" status, as a secret is required it can only be done via the `workflow_run` workflow. Due to the workflow split, initially you will only see the original `pull_request` workflow add a status check. After the 2nd part with `workflow_run` kicks in, you can optionally add this 2nd status check so that it is clear when the PR has completed the deployment successfully.
