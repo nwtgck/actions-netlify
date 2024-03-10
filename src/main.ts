@@ -41,7 +41,8 @@ async function createGitHubDeployment(
   githubClient: InstanceType<typeof GitHub>,
   environmentUrl: string,
   environment: string,
-  description: string | undefined
+  description: string | undefined,
+  autoInactive: boolean,
 ): Promise<void> {
   const deployRef = context.payload.pull_request?.head.sha ?? context.sha
   const deployment = await githubClient.rest.repos.createDeployment({
@@ -58,7 +59,8 @@ async function createGitHubDeployment(
     environment_url: environmentUrl,
     owner: context.repo.owner,
     repo: context.repo.repo,
-    deployment_id: (deployment.data as {id: number}).id
+    deployment_id: (deployment.data as { id: number }).id,
+    auto_inactive: autoInactive
   })
 }
 
@@ -192,13 +194,16 @@ export async function run(inputs: Inputs): Promise<void> {
               ? 'pull request'
               : 'commit')
 
+        const autoInactive = inputs.githubDeploymentAutoInactive()
+
         const description = inputs.githubDeploymentDescription()
         // Create GitHub Deployment
         await createGitHubDeployment(
           githubClient,
           deployUrl,
           environment,
-          description
+          description,
+          autoInactive
         )
       } catch (err) {
         // eslint-disable-next-line no-console
