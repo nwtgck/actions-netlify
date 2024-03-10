@@ -189,8 +189,8 @@ export async function run(inputs: Inputs): Promise<void> {
           (productionDeploy
             ? 'production'
             : context.issue.number !== undefined
-            ? 'pull request'
-            : 'commit')
+              ? 'pull request'
+              : 'commit')
 
         const description = inputs.githubDeploymentDescription()
         // Create GitHub Deployment
