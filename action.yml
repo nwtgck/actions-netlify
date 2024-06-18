@@ -41,6 +41,9 @@ inputs:
   enable-github-deployment:
     description: Whether or not to deploy to GitHub
     required: false
+  github-deployment-auto-inactive:
+      description: Whether to mark previous deployments to the environment as inactive
+      required: false
   github-deployment-environment:
     description: Environment name of GitHub Deployments
     required: false
