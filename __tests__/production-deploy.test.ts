@@ -1,7 +1,6 @@
 import * as path from 'path'
 import {mocked} from 'jest-mock'
 import {defaultInputs} from '../src/inputs'
-import {context} from '@actions/github'
 import {run} from '../src/main'
 
 const mockDeploy = jest.fn()
@@ -12,7 +11,40 @@ jest.mock('netlify', () => {
   })
 })
 jest.mock('../src/inputs')
-jest.mock('@actions/github')
+jest.mock('@actions/github', () => ({
+  context: {
+    ref: '',
+    issue: {
+      owner: '',
+      repo: '',
+      number: undefined
+    },
+    repo: {
+      owner: '',
+      repo: ''
+    },
+    payload: {},
+    sha: ''
+  },
+  getOctokit: jest.fn()
+}))
+
+const {context} = jest.requireMock('@actions/github') as {
+  context: {
+    ref: string
+    issue: {
+      owner: string
+      repo: string
+      number: number | undefined
+    }
+    repo: {
+      owner: string
+      repo: string
+    }
+    payload: {pull_request?: {head?: {sha?: string}}}
+    sha: string
+  }
+}
 
 mockDeploy.mockResolvedValue({deploy: {}})
 mocked(defaultInputs.githubToken).mockReturnValue('') // NOTE: empty string means the input is not specified
