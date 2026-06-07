@@ -15,13 +15,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: npm ci
       - run: npm run all
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Create a simple Web site
         run: mkdir -p deploy_dist && echo -e "<pre>$(date -u)\n$GITHUB_SHA\n$GITHUB_REF</pre>" > deploy_dist/index.html
       - uses: ./
