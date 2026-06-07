@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^2.0.3",
-    "@actions/github": "^8.0.0",
+    "@actions/github": "^9.1.1",
     "netlify": "^6.1.29"
   },
   "devDependencies": {
