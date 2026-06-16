@@ -65,6 +65,7 @@ jobs:
   - `alias: ${{ github.head_ref }}` replicates the [branch deploy prefix](https://docs.netlify.com/site-deploys/overview/#definitions)
   - `alias: deploy-preview-${{ github.event.number }}` replicates the [deploy preview prefix](https://docs.netlify.com/site-deploys/overview/#definitions)
 - `enable-github-deployment` Whether or not to deploy to GitHub (default: true)
+- `github-deployment-auto-inactive` Whether to mark previous deployments to the environment as inactive (Default: true)
 - `github-deployment-environment` Environment name of GitHub Deployments
 - `github-deployment-description` Description of the GitHub Deployment
 - `fails-without-credentials` Fails if no credentials provided (default: false)
